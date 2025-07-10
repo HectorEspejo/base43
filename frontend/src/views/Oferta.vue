@@ -1,6 +1,6 @@
 <template>
   <div class="container-custom mx-auto section-padding py-8">
-    <h1 class="text-4xl font-bold mb-8">Catálogo de Servicios</h1>
+    <h1 class="text-4xl font-bold mb-8">Catálogo de servicios</h1>
     
     <!-- Search and Filters -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
@@ -76,24 +76,24 @@ const selectedCategory = ref('')
 const services = ref([
   {
     id: 1,
-    name: 'Arquitectura Sostenible',
+    name: 'Arquitectura sostenible',
     description: 'Diseño de viviendas ecológicas y eficientes',
     category: 'arquitectura',
     provider: 'EcoArquitectos'
   },
   {
     id: 2,
-    name: 'Construcción Modular',
+    name: 'Construcción modular',
     description: 'Sistemas de construcción prefabricada y modular',
     category: 'construccion',
-    provider: 'ModuHomes'
+    provider: 'AdobeVerde'
   },
   {
     id: 3,
-    name: 'Asesoría Legal Cooperativas',
+    name: 'Asesoría legal a cooperativas',
     description: 'Asesoramiento legal para cooperativas de vivienda',
     category: 'legal',
-    provider: 'Abogados Asociados'
+    provider: 'Prodiversa'
   },
   // Add more services...
 ])

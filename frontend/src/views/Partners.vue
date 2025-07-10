@@ -1,6 +1,6 @@
 <template>
   <div class="container-custom mx-auto section-padding py-8">
-    <h1 class="text-4xl font-bold mb-8">Nuestros Partners</h1>
+    <h1 class="text-4xl font-bold mb-8">Nuestros partners</h1>
     
     <p class="text-lg mb-12 max-w-3xl">
       Trabajamos con organizaciones comprometidas con la transformación del modelo de vivienda, 
@@ -73,7 +73,9 @@
         </p>
         <div class="card-actions justify-center">
           <button class="btn btn-lg bg-white text-primary hover:bg-gray-100">
+          <router-link :to="{ name: 'Contacto' }" class="btn btn-primary btn-lg">
             Solicitar información
+          </router-link>
           </button>
         </div>
       </div>
@@ -119,7 +121,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <h3 class="font-semibold mb-2">Proyectos Conjuntos</h3>
+          <h3 class="font-semibold mb-2">Proyectos conjuntos</h3>
           <p class="text-sm text-gray-600">Oportunidades de colaboración en proyectos innovadores</p>
         </div>
       </div>
@@ -135,11 +137,11 @@ const partners = ref([
   {
     id: 1,
     name: 'AdobeVerde',
-    type: 'Cooperativa',
+    type: 'Empresa de inserción',
     description: 'Cooperativa especializada en construcción sostenible con técnicas tradicionales y materiales ecológicos.',
     areas: ['Construcción', 'Sostenibilidad', 'Formación'],
-    website: 'https://adobeverde.com',
-    logo: null
+    website: 'https://adobeverde.eu',
+    logo: '/adobeverde.png'
   },
   {
     id: 2,
@@ -147,17 +149,17 @@ const partners = ref([
     type: 'Asociación',
     description: 'Promoción de la diversidad en proyectos de vivienda inclusiva y accesible para todos.',
     areas: ['Inclusión', 'Accesibilidad', 'Diseño Universal'],
-    website: 'https://prodiversa.org',
-    logo: null
+    website: 'https://prodiversa.eu',
+    logo: '/prodiversa.jpg'
   },
   {
     id: 3,
-    name: 'Habita Coop',
-    type: 'Cooperativa',
-    description: 'Red de cooperativas de vivienda en cesión de uso comprometidas con el derecho a la vivienda.',
+    name: 'Universidad de Málaga',
+    type: 'Institución',
+    description: 'Colaboración con diversas facultades en la investigación y desarrollo del proyecto.',
     areas: ['Vivienda Social', 'Cesión de Uso', 'Asesoría'],
     website: null,
-    logo: null
+    logo: 'uma.jpg'
   },
   {
     id: 4,
