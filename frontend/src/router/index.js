@@ -13,6 +13,7 @@ import Oferta from '@/views/Oferta.vue'
 import Repositorio from '@/views/Repositorio.vue'
 import Proyectos from '@/views/Proyectos.vue'
 import Noticias from '@/views/Noticias.vue'
+import NewsDetail from '@/views/NewsDetail.vue'
 import Chat from '@/views/Chat.vue'
 import Partners from '@/views/Partners.vue'
 import Contacto from '@/views/Contacto.vue'
@@ -49,6 +50,11 @@ const routes = [
         path: 'noticias',
         name: 'Noticias',
         component: Noticias,
+      },
+      {
+        path: 'noticias/:year/:month/:day/:slug',
+        name: 'NewsDetail',
+        component: NewsDetail,
       },
       {
         path: 'chat',

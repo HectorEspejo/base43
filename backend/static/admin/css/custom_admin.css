@@ -1,0 +1,16 @@
+/* Custom admin styles for Calicanto */
+.field-preview_image img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+/* Make CKEditor responsive */
+.django-ckeditor-widget {
+    width: 100% !important;
+}
+
+/* Highlight featured posts */
+.field-featured input[type="checkbox"]:checked {
+    box-shadow: 0 0 5px #0066cc;
+}

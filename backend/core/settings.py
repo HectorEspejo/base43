@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'channels',
     'drf_yasg',
     'django_extensions',
+    'ckeditor',
+    'ckeditor_uploader',
     
     # Local apps
     'apps.authentication',
@@ -45,6 +47,9 @@ INSTALLED_APPS = [
     'apps.chat',
     'apps.partners',
     'apps.contacto',
+    
+    # Cleanup - must be last
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -90,6 +95,13 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# For development without Redis, uncomment this:
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels.layers.InMemoryChannelLayer'
+#     }
+# }
 
 # Database configuration
 DATABASES = {
@@ -243,3 +255,26 @@ if not DEBUG:
         traces_sample_rate=0.1,
         send_default_pii=True
     )
+
+# CKEditor Configuration
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 400,
+        'width': '100%',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+            ['Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Maximize', 'ShowBlocks'],
+            ['Source']
+        ],
+        'extraPlugins': 'uploadimage,image2',
+        'removePlugins': 'image',
+    }
+}
