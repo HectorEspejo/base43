@@ -1,4 +1,7 @@
 from rest_framework import serializers
+from django.utils.html import format_html
+from bs4 import BeautifulSoup
+import re
 from .models import NewsPost
 from apps.authentication.serializers import UserSerializer
 
@@ -39,6 +42,7 @@ class NewsDetailSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
     header_image_url = serializers.SerializerMethodField()
     url = serializers.CharField(source='get_absolute_url', read_only=True)
+    content = serializers.SerializerMethodField()
     
     class Meta:
         model = NewsPost
@@ -65,6 +69,35 @@ class NewsDetailSerializer(serializers.ModelSerializer):
                 return request.build_absolute_uri(obj.header_image.url)
             return obj.header_image.url
         return None
+    
+    def get_content(self, obj):
+        """Process content to make image URLs absolute."""
+        content = obj.content
+        request = self.context.get('request')
+        
+        if not request or not content:
+            return content
+        
+        # Parse HTML content
+        soup = BeautifulSoup(content, 'html.parser')
+        
+        # Find all img tags
+        for img in soup.find_all('img'):
+            src = img.get('src', '')
+            if src and not src.startswith(('http://', 'https://', '//')):
+                # Convert relative URL to absolute
+                if src.startswith('/'):
+                    img['src'] = request.build_absolute_uri(src)
+                else:
+                    img['src'] = request.build_absolute_uri('/media/' + src)
+        
+        # Find all links that might be images
+        for link in soup.find_all('a'):
+            href = link.get('href', '')
+            if href and href.startswith('/media/'):
+                link['href'] = request.build_absolute_uri(href)
+        
+        return str(soup)
 
 
 class NewsCreateUpdateSerializer(serializers.ModelSerializer):

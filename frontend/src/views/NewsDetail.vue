@@ -175,6 +175,22 @@ onMounted(() => {
   @apply text-gray-700;
 }
 
+:deep(.article-content img) {
+  @apply max-w-full h-auto rounded-lg shadow-lg my-6 mx-auto;
+}
+
+:deep(.article-content figure) {
+  @apply my-8 text-center;
+}
+
+:deep(.article-content figure img) {
+  @apply mx-auto;
+}
+
+:deep(.article-content figcaption) {
+  @apply text-sm text-gray-600 mt-2 italic;
+}
+
 :deep(.article-content h1),
 :deep(.article-content h2),
 :deep(.article-content h3),
