@@ -84,3 +84,6 @@ Thumbs.db
 # Misc
 notas.md
 quienes-somos.md
+nginx.txt
+daphne.txt
+*.txt

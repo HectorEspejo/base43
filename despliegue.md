@@ -1,6 +1,6 @@
-# Guía de Despliegue en Producción - Proyecto Calicanto
+# Guï¿½a de Despliegue en Producciï¿½n - Proyecto Calicanto
 
-Esta guía detalla el proceso completo para desplegar el proyecto Calicanto (Django + Vue.js) en un servidor Ubuntu.
+Esta guï¿½a detalla el proceso completo para desplegar el proyecto Calicanto (Django + Vue.js) en un servidor Ubuntu.
 
 ## Requisitos Previos
 
@@ -9,7 +9,7 @@ Esta guía detalla el proceso completo para desplegar el proyecto Calicanto (Djan
 - Dominio apuntando al servidor (opcional pero recomendado)
 - Al menos 2GB de RAM y 20GB de espacio en disco
 
-## 1. Preparación del Servidor
+## 1. Preparaciï¿½n del Servidor
 
 ### 1.1 Actualizar el sistema
 
@@ -35,7 +35,7 @@ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-## 2. Configuración de PostgreSQL
+## 2. Configuraciï¿½n de PostgreSQL
 
 ### 2.1 Crear base de datos y usuario
 
@@ -52,9 +52,9 @@ GRANT ALL PRIVILEGES ON DATABASE calicanto_db TO calicanto_user;
 \q
 ```
 
-## 3. Configuración del Proyecto
+## 3. Configuraciï¿½n del Proyecto
 
-### 3.1 Crear usuario para la aplicación
+### 3.1 Crear usuario para la aplicaciï¿½n
 
 ```bash
 sudo adduser --system --group calicanto
@@ -75,9 +75,9 @@ cd /home/calicanto/web
 sudo -u calicanto python3 -m venv /home/calicanto/venv
 ```
 
-## 4. Configuración del Backend (Django)
+## 4. Configuraciï¿½n del Backend (Django)
 
-### 4.1 Crear archivo de configuración de producción
+### 4.1 Crear archivo de configuraciï¿½n de producciï¿½n
 
 ```bash
 sudo -u calicanto nano /home/calicanto/web/backend/.env
@@ -89,7 +89,7 @@ Contenido del archivo `.env`:
 # Django settings
 SECRET_KEY=genera_una_clave_secreta_muy_larga_y_aleatoria
 DEBUG=False
-ALLOWED_HOSTS=tu-dominio.com,www.tu-dominio.com,servidor-ip
+ALLOWED_HOSTS=dev-calicanto-072025.4d3.org,www.dev-calicanto-072025.4d3.org,servidor-ip
 
 # Database
 DATABASE_URL=postgres://calicanto_user:tu_password_segura@localhost/calicanto_db
@@ -117,7 +117,7 @@ CELERY_BROKER_URL=redis://localhost:6379/0
 CELERY_RESULT_BACKEND=redis://localhost:6379/0
 
 # CORS
-CORS_ALLOWED_ORIGINS=https://tu-dominio.com,https://www.tu-dominio.com
+CORS_ALLOWED_ORIGINS=https://dev-calicanto-072025.4d3.org,https://www.dev-calicanto-072025.4d3.org
 ```
 
 ### 4.2 Instalar dependencias Python
@@ -128,10 +128,10 @@ sudo -u calicanto /home/calicanto/venv/bin/pip install -r /home/calicanto/web/ba
 sudo -u calicanto /home/calicanto/venv/bin/pip install gunicorn
 ```
 
-### 4.3 Configurar Django para producción
+### 4.3 Configurar Django para producciï¿½n
 
 ```bash
-# Recolectar archivos estáticos
+# Recolectar archivos estï¿½ticos
 sudo -u calicanto /home/calicanto/venv/bin/python /home/calicanto/web/backend/manage.py collectstatic --noinput
 
 # Ejecutar migraciones
@@ -145,7 +145,7 @@ sudo mkdir -p /home/calicanto/web/backend/media
 sudo chown -R calicanto:calicanto /home/calicanto/web/backend/media
 ```
 
-## 5. Configuración del Frontend (Vue.js)
+## 5. Configuraciï¿½n del Frontend (Vue.js)
 
 ### 5.1 Instalar dependencias y construir
 
@@ -155,17 +155,17 @@ sudo -u calicanto npm install
 sudo -u calicanto npm run build
 ```
 
-### 5.2 Crear archivo de configuración para producción
+### 5.2 Crear archivo de configuraciï¿½n para producciï¿½n
 
 Editar `/home/calicanto/web/frontend/.env.production`:
 
 ```env
-VITE_API_URL=https://tu-dominio.com/api
+VITE_API_URL=https://dev-calicanto-072025.4d3.org/api
 ```
 
-## 6. Configuración de Gunicorn
+## 6. Configuraciï¿½n de Gunicorn
 
-### 6.1 Crear archivo de configuración
+### 6.1 Crear archivo de configuraciï¿½n
 
 ```bash
 sudo nano /etc/supervisor/conf.d/calicanto.conf
@@ -192,9 +192,9 @@ sudo mkdir -p /var/log/calicanto
 sudo chown calicanto:calicanto /var/log/calicanto
 ```
 
-## 7. Configuración de Celery (para tareas asíncronas)
+## 7. Configuraciï¿½n de Celery (para tareas asï¿½ncronas)
 
-### 7.1 Crear configuración de Celery
+### 7.1 Crear configuraciï¿½n de Celery
 
 ```bash
 sudo nano /etc/supervisor/conf.d/celery.conf
@@ -228,9 +228,9 @@ autorestart=true
 environment=PATH="/home/calicanto/venv/bin"
 ```
 
-## 8. Configuración de Nginx
+## 8. Configuraciï¿½n de Nginx
 
-### 8.1 Crear configuración del sitio
+### 8.1 Crear configuraciï¿½n del sitio
 
 ```bash
 sudo nano /etc/nginx/sites-available/calicanto
@@ -245,19 +245,19 @@ upstream calicanto_backend {
 
 server {
     listen 80;
-    server_name tu-dominio.com www.tu-dominio.com;
+    server_name dev-calicanto-072025.4d3.org www.dev-calicanto-072025.4d3.org;
     
-    # Redirección a HTTPS
+    # Redirecciï¿½n a HTTPS
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name tu-dominio.com www.tu-dominio.com;
+    server_name dev-calicanto-072025.4d3.org www.dev-calicanto-072025.4d3.org;
     
     # SSL Configuration (usar Certbot para obtener certificados)
-    ssl_certificate /etc/letsencrypt/live/tu-dominio.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/tu-dominio.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/dev-calicanto-072025.4d3.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/dev-calicanto-072025.4d3.org/privkey.pem;
     
     # Security headers
     add_header X-Frame-Options "SAMEORIGIN" always;
@@ -327,11 +327,11 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 
-## 9. Configuración SSL con Let's Encrypt
+## 9. Configuraciï¿½n SSL con Let's Encrypt
 
 ```bash
 sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d tu-dominio.com -d www.tu-dominio.com
+sudo certbot --nginx -d dev-calicanto-072025.4d3.org -d www.dev-calicanto-072025.4d3.org
 ```
 
 ## 10. Iniciar servicios
@@ -350,7 +350,7 @@ sudo supervisorctl start celery-beat
 sudo supervisorctl status
 ```
 
-## 11. Configuración del Firewall
+## 11. Configuraciï¿½n del Firewall
 
 ```bash
 sudo ufw allow 22/tcp
@@ -361,7 +361,7 @@ sudo ufw enable
 
 ## 12. Monitoreo y Logs
 
-### 12.1 Ver logs de la aplicación
+### 12.1 Ver logs de la aplicaciï¿½n
 
 ```bash
 # Logs de Gunicorn
@@ -400,11 +400,11 @@ DB_NAME="calicanto_db"
 mkdir -p $BACKUP_DIR
 pg_dump -U calicanto_user -h localhost $DB_NAME | gzip > $BACKUP_DIR/backup_$DATE.sql.gz
 
-# Eliminar backups antiguos (más de 30 días)
+# Eliminar backups antiguos (mï¿½s de 30 dï¿½as)
 find $BACKUP_DIR -name "backup_*.sql.gz" -mtime +30 -delete
 ```
 
-### 13.2 Programar backup automático
+### 13.2 Programar backup automï¿½tico
 
 ```bash
 sudo crontab -e
@@ -412,9 +412,9 @@ sudo crontab -e
 0 2 * * * /home/calicanto/backup.sh
 ```
 
-## 14. Actualización del Código
+## 14. Actualizaciï¿½n del Cï¿½digo
 
-Para actualizar la aplicación:
+Para actualizar la aplicaciï¿½n:
 
 ```bash
 # Backend
@@ -435,26 +435,26 @@ sudo supervisorctl restart celery
 sudo systemctl reload nginx
 ```
 
-## 15. Solución de Problemas Comunes
+## 15. Soluciï¿½n de Problemas Comunes
 
 ### Error 502 Bad Gateway
-- Verificar que Gunicorn esté ejecutándose: `sudo supervisorctl status calicanto`
+- Verificar que Gunicorn estï¿½ ejecutï¿½ndose: `sudo supervisorctl status calicanto`
 - Revisar logs: `sudo tail -f /var/log/calicanto/gunicorn.log`
 - Verificar permisos del socket: `ls -la /home/calicanto/web/`
 
-### Archivos estáticos no se cargan
-- Verificar que se ejecutó `collectstatic`
+### Archivos estï¿½ticos no se cargan
+- Verificar que se ejecutï¿½ `collectstatic`
 - Revisar permisos: `ls -la /home/calicanto/web/backend/staticfiles/`
-- Verificar configuración de Nginx
+- Verificar configuraciï¿½n de Nginx
 
 ### Base de datos no conecta
 - Verificar credenciales en `.env`
-- Probar conexión: `sudo -u postgres psql -U calicanto_user -d calicanto_db`
+- Probar conexiï¿½n: `sudo -u postgres psql -U calicanto_user -d calicanto_db`
 
 ## Notas Finales
 
 - Mantener el sistema actualizado regularmente
 - Monitorear el uso de recursos del servidor
-- Configurar alertas para errores críticos
-- Realizar backups periódicos de la base de datos y archivos media
+- Configurar alertas para errores crï¿½ticos
+- Realizar backups periï¿½dicos de la base de datos y archivos media
 - Revisar logs regularmente para detectar problemas
