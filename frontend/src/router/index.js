@@ -19,6 +19,7 @@ import Partners from '@/views/Partners.vue'
 import Contacto from '@/views/Contacto.vue'
 import Profile from '@/views/Profile.vue'
 import NotFound from '@/views/NotFound.vue'
+import QuienesSomos from '@/views/QuienesSomos.vue'
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
         path: 'oferta',
         name: 'Oferta',
         component: Oferta,
+      },
+      {
+        path: 'quienes-somos',
+        name: 'QuienesSomos',
+        component: QuienesSomos,
       },
       {
         path: 'repositorio',

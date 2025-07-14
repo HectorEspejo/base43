@@ -11,6 +11,7 @@
               </svg>
             </label>
             <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li><router-link :to="{ name: 'QuienesSomos' }">Quiénes somos</router-link></li>
               <li><router-link :to="{ name: 'Oferta' }">Oferta</router-link></li>
               <li><router-link :to="{ name: 'Repositorio' }">Repositorio</router-link></li>
               <li><router-link :to="{ name: 'Proyectos' }">Proyectos</router-link></li>
@@ -28,6 +29,7 @@
         
         <div class="navbar-center hidden lg:flex items-center flex-1 justify-center">
           <ul class="menu menu-horizontal px-1 items-center gap-1">
+            <li><router-link :to="{ name: 'QuienesSomos' }">Quiénes somos</router-link></li>
             <li><router-link :to="{ name: 'Oferta' }">Oferta</router-link></li>
             <li><router-link :to="{ name: 'Repositorio' }">Repositorio</router-link></li>
             <li><router-link :to="{ name: 'Proyectos' }">Proyectos</router-link></li>

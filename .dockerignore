@@ -63,3 +63,6 @@ htmlcov/
 
 # Misc
 .dockerignore
+quienes-somos.md
+notas.md
+despliegue.md

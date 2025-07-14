@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section class="hero min-h-[600px] relative">
       <div class="absolute inset-0 z-0">
-        <img src="/cooperativa.jpg" alt="Cooperativa Background" class="w-full h-full object-cover" />
+        <img src="/public/hero-1.png" alt="Cooperativa Background" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
       </div>
       <div class="hero-content text-center text-white relative z-10">
