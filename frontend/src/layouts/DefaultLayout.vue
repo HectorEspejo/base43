@@ -91,6 +91,12 @@
         <p class="text-sm mt-1">Licencia Copyleft - Todos los derechos compartidos</p>
         <p>Con la tecnología de 4d3</p>
       </div>
+      <!-- Logos de financiación -->
+      <div class="flex items-center justify-center gap-6 mt-6">
+        <img src="/ue.png" alt="Union Europea" class="h-16 object-contain" />
+        <img src="/mites.png" alt="MITES" class="h-16 object-contain" />
+        <img src="/prtr.png" alt="PRTR" class="h-32 object-contain" />
+      </div>
     </footer>
   </div>
 </template>
