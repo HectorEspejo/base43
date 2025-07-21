@@ -1,24 +1,24 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="hero min-h-[600px] relative">
+    <section class="hero min-h-[400px] sm:min-h-[500px] md:min-h-[600px] relative">
       <div class="absolute inset-0 z-0">
-        <img src="/public/hero-1.png" alt="Cooperativa Background" class="w-full h-full object-cover" />
+        <img src="/hero-1.png" alt="Cooperativa Background" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
       </div>
       <div class="hero-content text-center text-white relative z-10">
         <div class="max-w-3xl">
-          <h1 class="text-5xl font-bold mb-6">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
             Un espacio de innovación urbana y compromiso social
           </h1>
-          <p class="text-xl mb-8">
+          <p class="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 px-4 sm:px-0">
             Calicanto es una plataforma pionera que impulsa modelos habitacionales sostenibles, cooperativos y asequibles desde la economía social. En alianza con comunidades, entidades del tercer sector y administraciones públicas, construimos soluciones reales al derecho a la vivienda. Descubre nuestros valores, proyectos y la comunidad que lo hace posible.
           </p>
-          <div class="space-x-4">
-            <router-link :to="{ name: 'Proyectos' }" class="btn btn-secondary btn-lg">
+          <div class="flex flex-col sm:flex-row gap-4 sm:justify-center px-4 sm:px-0">
+            <router-link :to="{ name: 'Proyectos' }" class="btn btn-secondary btn-md sm:btn-lg w-full sm:w-auto">
               Ver proyectos
             </router-link>
-            <router-link :to="{ name: 'Register' }" class="btn btn-outline btn-lg text-white border-white hover:bg-white hover:text-primary-600">
+            <router-link :to="{ name: 'Register' }" class="btn btn-outline btn-md sm:btn-lg text-white border-white hover:bg-white hover:text-primary-600 w-full sm:w-auto">
               Únete a la comunidad
             </router-link>
           </div>
@@ -27,9 +27,9 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-20 section-padding">
+    <section class="py-12 sm:py-16 md:py-20 section-padding">
       <div class="container-custom">
-        <h2 class="text-4xl font-bold text-center mb-12">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-10 md:mb-12">
           ¿Qué ofrecemos?
         </h2>
         
@@ -146,16 +146,16 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-20 bg-base-200">
+    <section class="py-12 sm:py-16 md:py-20 bg-base-200">
       <div class="container-custom text-center">
-        <h2 class="text-4xl font-bold mb-6">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
           ¿Listo para formar parte del cambio?
         </h2>
-        <p class="text-xl mb-8 max-w-2xl mx-auto">
+        <p class="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
           Únete a Calicanto y sé parte de una comunidad que está transformando 
           la forma de entender y construir vivienda.
         </p>
-        <router-link :to="{ name: 'Contacto' }" class="btn btn-primary btn-lg">
+        <router-link :to="{ name: 'Contacto' }" class="btn btn-primary btn-md sm:btn-lg">
           Contáctanos
         </router-link>
       </div>

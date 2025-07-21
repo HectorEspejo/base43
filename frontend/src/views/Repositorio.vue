@@ -1,6 +1,6 @@
 <template>
   <div class="container-custom mx-auto section-padding py-8">
-    <h1 class="text-4xl font-bold mb-8">Repositorio de Documentos</h1>
+    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8">Repositorio de Documentos</h1>
     
     <!-- Categories View -->
     <div v-if="!selectedCategory" class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Actions Bar -->
-      <div class="flex justify-between items-center mb-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div class="flex gap-2">
           <button @click="resetView" class="btn btn-ghost btn-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,12 +53,12 @@
           </button>
         </div>
         
-        <div class="form-control">
+        <div class="form-control w-full sm:w-auto">
           <input 
             v-model="searchQuery" 
             type="text" 
             placeholder="Buscar archivos..." 
-            class="input input-bordered input-sm w-64"
+            class="input input-bordered input-sm w-full sm:w-64"
           />
         </div>
       </div>
@@ -76,20 +76,22 @@
         <span>{{ error }}</span>
       </div>
 
-      <!-- Files Table -->
-      <div v-else class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Tamaño</th>
-              <th>Licencia</th>
-              <th>Modificado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
+      <!-- Files Table for Desktop / Cards for Mobile -->
+      <div v-else>
+        <!-- Desktop Table View -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="table w-full">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Tamaño</th>
+                <th>Licencia</th>
+                <th>Modificado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
             <!-- Directories -->
             <tr v-for="dir in filteredDirectories" :key="`dir-${dir.id}`" class="hover">
               <td>
@@ -189,8 +191,109 @@
                 </div>
               </td>
             </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="md:hidden space-y-4">
+          <!-- Directory Cards -->
+          <div v-for="dir in filteredDirectories" :key="`dir-${dir.id}`" 
+               class="card bg-base-100 shadow-lg" 
+               @click="selectDirectory(dir)">
+            <div class="card-body p-4">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center gap-3 flex-1">
+                  <div class="w-12 h-12 bg-base-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base">
+                      {{ dir.name }}
+                      <svg v-if="!dir.is_public" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </h3>
+                    <p class="text-sm text-gray-600">{{ dir.files_count }} archivos</p>
+                    <p class="text-xs text-gray-500 mt-1">{{ formatDate(dir.created_at) }}</p>
+                  </div>
+                </div>
+                <button 
+                  @click.stop="downloadDirectory(dir)"
+                  class="btn btn-ghost btn-sm"
+                  title="Descargar como ZIP"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- File Cards -->
+          <div v-for="file in filteredFiles" :key="`file-${file.id}`" 
+               class="card bg-base-100 shadow-lg">
+            <div class="card-body p-4">
+              <div class="flex items-start justify-between">
+                <div class="flex items-center gap-3 flex-1">
+                  <div class="w-12 h-12 bg-base-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <svg v-if="getFileIcon(file) === 'pdf'" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <svg v-else-if="getFileIcon(file) === 'image'" xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold text-base break-words">
+                      {{ file.name }}
+                      <svg v-if="!file.is_public" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </h3>
+                    <p v-if="file.description" class="text-sm text-gray-600 mt-1 break-words">{{ file.description }}</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <span class="badge badge-sm">{{ file.extension }}</span>
+                      <span class="badge badge-sm">{{ file.size_display }}</span>
+                      <span class="badge badge-success badge-sm">{{ file.license_display }}</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">{{ formatDate(file.uploaded_at) }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex gap-2 mt-3 justify-end">
+                <button 
+                  v-if="file.can_preview"
+                  @click="previewFile(file)"
+                  class="btn btn-ghost btn-sm"
+                  title="Vista previa"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <span class="hidden sm:inline">Vista previa</span>
+                </button>
+                <button 
+                  @click="downloadFile(file)"
+                  class="btn btn-primary btn-sm"
+                  title="Descargar"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                  </svg>
+                  <span class="hidden sm:inline">Descargar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Empty State -->
@@ -205,14 +308,14 @@
 
     <!-- Preview Modal -->
     <dialog ref="previewModal" class="modal">
-      <div class="modal-box max-w-4xl">
+      <div class="modal-box max-w-4xl w-11/12 sm:w-full">
         <h3 class="font-bold text-lg mb-4">{{ selectedFile?.name }}</h3>
         
         <!-- PDF Preview -->
         <iframe 
           v-if="selectedFile?.extension === 'PDF'"
           :src="previewUrl"
-          class="w-full h-[600px]"
+          class="w-full h-[400px] sm:h-[600px]"
         ></iframe>
         
         <!-- Image Preview -->
@@ -225,7 +328,7 @@
         <!-- Text Preview -->
         <pre 
           v-else-if="['TXT', 'MD'].includes(selectedFile?.extension)"
-          class="bg-base-200 p-4 rounded overflow-auto max-h-[600px]"
+          class="bg-base-200 p-4 rounded overflow-auto max-h-[400px] sm:max-h-[600px] text-sm"
         >{{ previewContent }}</pre>
         
         <div class="modal-action">

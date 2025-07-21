@@ -1,7 +1,7 @@
 <template>
-  <div class="flex h-[calc(100vh-4rem)]">
+  <div class="flex h-[calc(100vh-4rem)] overflow-x-hidden">
     <!-- Sidebar with channels -->
-    <div class="w-64 bg-base-200 p-4 overflow-y-auto">
+    <div class="w-full sm:w-64 bg-base-200 p-4 overflow-y-auto hidden sm:block">
       <h2 class="text-lg font-bold mb-4">Canales</h2>
       <ul class="menu menu-compact">
         <li v-for="channel in channels" :key="channel.id">
@@ -157,7 +157,7 @@
     </div>
 
     <!-- Online users sidebar -->
-    <div class="w-64 bg-base-200 p-4 overflow-y-auto border-l">
+    <div class="w-full sm:w-64 bg-base-200 p-4 overflow-y-auto border-l hidden sm:block">
       <h3 class="text-lg font-bold mb-4">Usuarios Online</h3>
       <ul class="space-y-2">
         <li v-for="user in onlineUsers" :key="user.id" class="flex items-center gap-2">
@@ -498,6 +498,21 @@ const formatTime = (dateString) => {
       minute: '2-digit'
     }).format(date)
   }
+}
+
+const selectChannelAndCloseMobile = async (channel) => {
+  await selectChannel(channel)
+  showMobileMenu.value = false
+}
+
+const toggleMobileMenu = () => {
+  showMobileMenu.value = !showMobileMenu.value
+  showUsersPanel.value = false
+}
+
+const closeMobilePanels = () => {
+  showMobileMenu.value = false
+  showUsersPanel.value = false
 }
 
 // Lifecycle

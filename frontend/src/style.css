@@ -11,6 +11,14 @@
   body {
     @apply antialiased;
   }
+  
+  /* Prevent horizontal scroll on mobile */
+  @media (max-width: 768px) {
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+  }
 }
 
 @layer components {
@@ -28,5 +36,38 @@
   
   .container-custom {
     @apply max-w-7xl mx-auto;
+  }
+  
+  /* Mobile-specific utilities */
+  .mobile-menu-transition {
+    @apply transition-transform duration-300 ease-in-out;
+  }
+  
+  .mobile-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden;
+  }
+  
+  /* Touch-friendly sizing */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Responsive text truncation */
+  .truncate-mobile {
+    @apply truncate sm:whitespace-normal;
+  }
+  
+  /* Mobile-first spacing */
+  .mobile-spacing {
+    @apply space-y-4 sm:space-y-0 sm:space-x-4;
+  }
+  
+  /* Responsive hide/show */
+  .mobile-only {
+    @apply block sm:hidden;
+  }
+  
+  .desktop-only {
+    @apply hidden sm:block;
   }
 }
