@@ -82,44 +82,32 @@ const projectTypes = [
   { value: 'todos', label: 'Todos' },
   { value: 'cohousing', label: 'Cohousing' },
   { value: 'cooperativa', label: 'Cooperativas' },
-  { value: 'senior', label: 'Senior Cohousing' },
-  { value: 'menores', label: 'Centros de Menores' },
-  { value: 'social', label: 'Vivienda Social' }
+  { value: 'menores', label: 'Centros de menores' },
+  { value: 'social', label: 'Vivienda social' }
 ]
 
 // Mock data - replace with API call
 const projects = ref([
   {
     id: 1,
-    name: 'Residencial Las Acacias',
-    type: 'cohousing',
-    location: 'Madrid, España',
-    description: 'Proyecto de cohousing intergeneracional con 25 unidades habitacionales y amplios espacios comunes.',
-    participants: 45,
+    name: 'Centro de protección de menores en suelo público',
+    type: 'menores',
+    location: 'Málaga, Andalucía',
+    description: 'Proyecto para la puesta en marcha de un centro de menores.',
+    participants: 3,
     units: 25,
-    status: 'En construcción',
-    image: null
-  },
-  {
-    id: 2,
-    name: 'Cooperativa El Roble',
-    type: 'cooperativa',
-    location: 'Barcelona, España',
-    description: 'Cooperativa de vivienda en cesión de uso con criterios de sostenibilidad y eficiencia energética.',
-    participants: 32,
-    units: 20,
     status: 'En desarrollo',
     image: null
   },
   {
-    id: 3,
-    name: 'Centro Juvenil Aurora',
-    type: 'menores',
-    location: 'Valencia, España',
-    description: 'Centro residencial para menores con programa de integración social y apoyo educativo.',
-    participants: 24,
-    units: 12,
-    status: 'Activo',
+    id: 2,
+    name: 'Cooperativa de vivienda en cesión de uso',
+    type: 'cooperativa',
+    location: 'Málaga, Andalucía',
+    description: 'Cooperativa de vivienda en cesión de uso con criterios de sostenibilidad y eficiencia energética.',
+    participants: 32,
+    units: 20,
+    status: 'En desarrollo',
     image: null
   }
 ])

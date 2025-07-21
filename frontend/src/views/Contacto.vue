@@ -117,7 +117,7 @@
             </div>
             <div>
               <h3 class="font-semibold mb-1">Email</h3>
-              <p class="text-gray-600">contacto@calicanto.org</p>
+              <p class="text-gray-600">calicanto.habitat@adobeverde.eu</p>
               <p class="text-gray-600">info@calicanto.org</p>
             </div>
           </div>
@@ -144,8 +144,8 @@
             </div>
             <div>
               <h3 class="font-semibold mb-1">Dirección</h3>
-              <p class="text-gray-600">Calle Ejemplo, 123</p>
-              <p class="text-gray-600">28001 Madrid, España</p>
+              <p class="text-gray-600">Calle Juan del Encina, 24, Local 1</p>
+              <p class="text-gray-600">29013 Málaga, España</p>
             </div>
           </div>
 

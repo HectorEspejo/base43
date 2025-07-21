@@ -9,11 +9,10 @@
       <div class="hero-content text-center text-white relative z-10">
         <div class="max-w-3xl">
           <h1 class="text-5xl font-bold mb-6">
-            Construyendo lo común. Creando habitabilidad
+            Un espacio de innovación urbana y compromiso social
           </h1>
           <p class="text-xl mb-8">
-            Calicanto es una cooperativa de vivienda que conecta personas, proyectos y recursos 
-            para crear soluciones de vivienda colaborativa y sostenible.
+            Calicanto es una plataforma pionera que impulsa modelos habitacionales sostenibles, cooperativos y asequibles desde la economía social. En alianza con comunidades, entidades del tercer sector y administraciones públicas, construimos soluciones reales al derecho a la vivienda. Descubre nuestros valores, proyectos y la comunidad que lo hace posible.
           </p>
           <div class="space-x-4">
             <router-link :to="{ name: 'Proyectos' }" class="btn btn-secondary btn-lg">

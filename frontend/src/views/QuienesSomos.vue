@@ -268,16 +268,16 @@
         <!-- CTA Section -->
         <div class="card bg-gradient-to-br from-primary/10 to-secondary/10 mb-16">
           <div class="card-body text-center py-12">
-            <h2 class="card-title text-3xl justify-center mb-4">¿Necesitas una vivienda digna?</h2>
+            <h2 class="card-title text-3xl justify-center mb-4">¡Por la vivienda digna!</h2>
             <p class="text-lg mb-8">
               Únete a nuestra comunidad y trabajemos juntos por el derecho a una vivienda digna y asequible.
             </p>
             <div class="flex gap-4 justify-center flex-wrap">
               <router-link to="/contacto" class="btn btn-primary">
-                Solicitar Información
+                Solicitar información
               </router-link>
               <router-link to="/proyectos" class="btn btn-outline btn-primary">
-                Ver Proyectos Disponibles
+                Ver proyectos disponibles
               </router-link>
             </div>
           </div>

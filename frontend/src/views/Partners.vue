@@ -91,7 +91,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </div>
-          <h3 class="font-semibold mb-2">Red de Contactos</h3>
+          <h3 class="font-semibold mb-2">Red de contactos</h3>
           <p class="text-sm text-gray-600">Acceso a una amplia red de profesionales y organizaciones del sector</p>
         </div>
         
@@ -111,7 +111,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
           </div>
-          <h3 class="font-semibold mb-2">Recursos Compartidos</h3>
+          <h3 class="font-semibold mb-2">Recursos compartidos</h3>
           <p class="text-sm text-gray-600">Acceso a herramientas, documentación y conocimiento colectivo</p>
         </div>
         
@@ -151,42 +151,6 @@ const partners = ref([
     areas: ['Inclusión', 'Accesibilidad', 'Diseño Universal'],
     website: 'https://prodiversa.eu',
     logo: '/prodiversa.jpg'
-  },
-  {
-    id: 3,
-    name: 'Universidad de Málaga',
-    type: 'Institución',
-    description: 'Colaboración con diversas facultades en la investigación y desarrollo del proyecto.',
-    areas: ['Vivienda Social', 'Cesión de Uso', 'Asesoría'],
-    website: null,
-    logo: 'uma.jpg'
-  },
-  {
-    id: 4,
-    name: 'EcoHabitar',
-    type: 'Fundación',
-    description: 'Fundación dedicada a la investigación y promoción de hábitats sostenibles y resilientes.',
-    areas: ['Investigación', 'Permacultura', 'Educación'],
-    website: 'https://ecohabitar.org',
-    logo: null
-  },
-  {
-    id: 5,
-    name: 'Financoop',
-    type: 'Entidad Financiera',
-    description: 'Cooperativa de crédito especializada en financiación ética para proyectos de economía social.',
-    areas: ['Financiación', 'Banca Ética', 'Asesoría Financiera'],
-    website: null,
-    logo: null
-  },
-  {
-    id: 6,
-    name: 'ArquiSocial',
-    type: 'Estudio',
-    description: 'Estudio de arquitectura especializado en procesos participativos y diseño colaborativo.',
-    areas: ['Arquitectura', 'Participación', 'Diseño Social'],
-    website: 'https://arquisocial.com',
-    logo: null
   }
 ])
 </script>
