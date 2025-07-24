@@ -27,8 +27,12 @@
     </section>
 
     <!-- Features Section -->
-    <section class="py-12 sm:py-16 md:py-20 section-padding">
-      <div class="container-custom">
+    <section class="py-12 sm:py-16 md:py-20 section-padding relative overflow-hidden">
+      <div 
+        class="absolute inset-0 opacity-15"
+        style="background-image: url('/patron.png'); background-size: 300px 300px; background-repeat: repeat; transform-origin: center;"
+      ></div>
+      <div class="container-custom relative z-10">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-10 md:mb-12">
           ¿Qué ofrecemos?
         </h2>

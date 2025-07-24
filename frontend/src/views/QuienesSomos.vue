@@ -38,33 +38,11 @@
             </p>
           </div>
           <div class="relative">
-            <svg viewBox="0 0 400 400" class="w-full h-auto">
-              <!-- Background circle -->
-              <circle cx="200" cy="200" r="180" fill="url(#gradient1)" opacity="0.1"/>
-              <!-- Houses -->
-              <g transform="translate(200, 200)">
-                <!-- Central house -->
-                <path d="M-40 -20 L0 -50 L40 -20 L40 20 L-40 20 Z" fill="#3B82F6" opacity="0.8"/>
-                <rect x="-15" y="-5" width="10" height="15" fill="white"/>
-                <rect x="5" y="-5" width="10" height="15" fill="white"/>
-                <!-- Left house -->
-                <path d="M-120 -10 L-80 -40 L-40 -10 L-40 30 L-120 30 Z" fill="#10B981" opacity="0.7" transform="rotate(-20)"/>
-                <!-- Right house -->
-                <path d="M40 -10 L80 -40 L120 -10 L120 30 L40 30 Z" fill="#F59E0B" opacity="0.7" transform="rotate(20)"/>
-                <!-- People -->
-                <circle cx="0" cy="60" r="8" fill="#6366F1"/>
-                <circle cx="-30" cy="65" r="8" fill="#EC4899"/>
-                <circle cx="30" cy="65" r="8" fill="#14B8A6"/>
-                <circle cx="-60" cy="70" r="8" fill="#F97316"/>
-                <circle cx="60" cy="70" r="8" fill="#8B5CF6"/>
-              </g>
-              <defs>
-                <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#3B82F6"/>
-                  <stop offset="100%" style="stop-color:#10B981"/>
-                </linearGradient>
-              </defs>
-            </svg>
+            <img 
+              src="/compartir.webp" 
+              alt="Comunidad compartiendo - Vivienda colaborativa" 
+              class="w-full h-auto rounded-lg shadow-lg"
+            />
           </div>
         </div>
 
@@ -78,7 +56,7 @@
               <span class="badge badge-primary badge-lg">1</span>
               Accesibilidad y asequibilidad
             </h3>
-            <div class="grid md:grid-cols-2 gap-6">
+            <div class="grid md:grid-cols-3 gap-6">
               <div class="card bg-base-100 shadow-lg">
                 <div class="card-body">
                   <h4 class="font-semibold text-lg mb-3">Diseño universal</h4>
@@ -109,6 +87,23 @@
                   </ul>
                 </div>
               </div>
+              <div class="flex items-center justify-center">
+                <div 
+                  class="card bg-base-100 shadow-lg cursor-pointer transition-all duration-300 hover:transform hover:-translate-y-1"
+                  @click="openImageModal"
+                >
+                  <figure class="px-4 pt-4">
+                    <img 
+                      src="/configuracion-cohousing.png" 
+                      alt="Configuración Cohousing - Modelo integral de vivienda colaborativa" 
+                      class="w-full h-auto rounded-lg"
+                    />
+                  </figure>
+                  <div class="card-body items-center text-center">
+                    <p class="text-sm text-gray-600">Click para ampliar</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -118,35 +113,54 @@
               <span class="badge badge-secondary badge-lg">2</span>
               Participación comunitaria
             </h3>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                  <h4 class="font-semibold text-lg mb-3">Involucramiento de la comunidad</h4>
-                  <ul class="space-y-2">
-                    <li class="flex gap-2">
-                      <span class="text-secondary">•</span>
-                      <span><strong>Consultas y participación:</strong> Involucrar a los residentes en el proceso de diseño y planificación.</span>
-                    </li>
-                    <li class="flex gap-2">
-                      <span class="text-secondary">•</span>
-                      <span><strong>Gobernanza participativa:</strong> Fomentar la creación de comités de residentes.</span>
-                    </li>
-                  </ul>
+            <div class="space-y-6">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="card bg-base-100 shadow-lg">
+                  <div class="card-body">
+                    <h4 class="font-semibold text-lg mb-3">Involucramiento de la comunidad</h4>
+                    <ul class="space-y-2">
+                      <li class="flex gap-2">
+                        <span class="text-secondary">•</span>
+                        <span><strong>Consultas y participación:</strong> Involucrar a los residentes en el proceso de diseño y planificación.</span>
+                      </li>
+                      <li class="flex gap-2">
+                        <span class="text-secondary">•</span>
+                        <span><strong>Gobernanza participativa:</strong> Fomentar la creación de comités de residentes.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="card bg-base-100 shadow-lg">
+                  <div class="card-body">
+                    <h4 class="font-semibold text-lg mb-3">Desarrollo comunitario</h4>
+                    <ul class="space-y-2">
+                      <li class="flex gap-2">
+                        <span class="text-secondary">•</span>
+                        <span><strong>Espacios comunes:</strong> Crear espacios que promuevan la interacción y cohesión social.</span>
+                      </li>
+                      <li class="flex gap-2">
+                        <span class="text-secondary">•</span>
+                        <span><strong>Programas de apoyo:</strong> Ofrecer servicios de cuidado infantil, actividades para jóvenes y capacitación laboral.</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-              <div class="card bg-base-100 shadow-lg">
-                <div class="card-body">
-                  <h4 class="font-semibold text-lg mb-3">Desarrollo comunitario</h4>
-                  <ul class="space-y-2">
-                    <li class="flex gap-2">
-                      <span class="text-secondary">•</span>
-                      <span><strong>Espacios comunes:</strong> Crear espacios que promuevan la interacción y cohesión social.</span>
-                    </li>
-                    <li class="flex gap-2">
-                      <span class="text-secondary">•</span>
-                      <span><strong>Programas de apoyo:</strong> Ofrecer servicios de cuidado infantil, actividades para jóvenes y capacitación laboral.</span>
-                    </li>
-                  </ul>
+              <div class="flex justify-center">
+                <div 
+                  class="card bg-base-100 shadow-lg cursor-pointer transition-all duration-300 hover:transform hover:-translate-y-1 max-w-2xl"
+                  @click="openStructureModal"
+                >
+                  <figure class="px-4 pt-4">
+                    <img 
+                      src="/estructura.png" 
+                      alt="Estructura de espacios comunitarios" 
+                      class="w-full h-auto rounded-lg"
+                    />
+                  </figure>
+                  <div class="card-body items-center text-center">
+                    <p class="text-sm text-gray-600">Click para ampliar</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -266,17 +280,22 @@
         </div>
 
         <!-- CTA Section -->
-        <div class="card bg-gradient-to-br from-primary/10 to-secondary/10 mb-16">
-          <div class="card-body text-center py-12">
-            <h2 class="card-title text-3xl justify-center mb-4">¡Por la vivienda digna!</h2>
-            <p class="text-lg mb-8">
+        <div class="card mb-16 relative overflow-hidden">
+          <div 
+            class="absolute inset-0 opacity-40"
+            style="background-image: url('/futuro.png'); background-size: 80%; background-position: center; background-repeat: no-repeat;"
+          ></div>
+          <div class="absolute inset-0 bg-white/60"></div>
+          <div class="card-body text-center py-12 relative z-10">
+            <h2 class="card-title text-3xl justify-center mb-4 text-black font-bold">¡Por la vivienda digna!</h2>
+            <p class="text-lg mb-8 text-black font-medium">
               Únete a nuestra comunidad y trabajemos juntos por el derecho a una vivienda digna y asequible.
             </p>
             <div class="flex gap-4 justify-center flex-wrap">
-              <router-link to="/contacto" class="btn btn-primary">
+              <router-link to="/contacto" class="btn btn-primary shadow-xl font-semibold">
                 Solicitar información
               </router-link>
-              <router-link to="/proyectos" class="btn btn-outline btn-primary">
+              <router-link to="/proyectos" class="btn btn-outline btn-primary shadow-xl font-semibold">
                 Ver proyectos disponibles
               </router-link>
             </div>
@@ -284,11 +303,60 @@
         </div>
       </div>
     </section>
+
+    <!-- Image Modal -->
+    <div v-if="showModal" class="modal modal-open" @click="closeImageModal">
+      <div class="modal-box max-w-5xl">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="closeImageModal">✕</button>
+        <figure class="mt-4">
+          <img 
+            src="/configuracion-cohousing.png" 
+            alt="Configuración Cohousing - Modelo integral de vivienda colaborativa" 
+            class="w-full h-auto"
+          />
+        </figure>
+      </div>
+    </div>
+
+    <!-- Structure Modal -->
+    <div v-if="showStructureModal" class="modal modal-open" @click="closeStructureModal">
+      <div class="modal-box max-w-5xl">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="closeStructureModal">✕</button>
+        <figure class="mt-4">
+          <img 
+            src="/estructura.png" 
+            alt="Estructura de espacios comunitarios" 
+            class="w-full h-auto"
+          />
+        </figure>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+
+// Modal states
+const showModal = ref(false)
+const showStructureModal = ref(false)
+
+// Modal functions
+const openImageModal = () => {
+  showModal.value = true
+}
+
+const closeImageModal = () => {
+  showModal.value = false
+}
+
+const openStructureModal = () => {
+  showStructureModal.value = true
+}
+
+const closeStructureModal = () => {
+  showStructureModal.value = false
+}
 
 // Animation on scroll (optional)
 onMounted(() => {
