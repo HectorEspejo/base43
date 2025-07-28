@@ -1,386 +1,289 @@
-# Gu�a de Despliegue en Producci�n - Proyecto Calicanto
+# Guía de Despliegue de Calicanto en Ubuntu Server
 
-Esta gu�a detalla el proceso completo para desplegar el proyecto Calicanto (Django + Vue.js) en un servidor Ubuntu.
+Esta guía detalla el proceso completo para desplegar la plataforma Calicanto en un servidor Ubuntu 22.04 LTS o superior.
 
 ## Requisitos Previos
 
-- Servidor Ubuntu 20.04 LTS o superior
-- Acceso SSH con privilegios sudo
-- Dominio apuntando al servidor (opcional pero recomendado)
-- Al menos 2GB de RAM y 20GB de espacio en disco
+- Ubuntu Server 22.04 LTS o superior
+- Mínimo 2GB RAM (recomendado 4GB)
+- 20GB de espacio en disco
+- Acceso root o usuario con privilegios sudo
+- Dominio apuntando al servidor
 
-## 1. Preparaci�n del Servidor
+## 1. Preparación del Sistema
 
-### 1.1 Actualizar el sistema
-
+### 1.1 Actualizar el Sistema
 ```bash
 sudo apt update && sudo apt upgrade -y
+sudo apt autoremove -y
 ```
 
-### 1.2 Instalar dependencias del sistema
-
+### 1.2 Instalar Dependencias Base
 ```bash
-sudo apt install -y python3-pip python3-dev python3-venv \
-    nginx postgresql postgresql-contrib \
-    redis-server supervisor \
-    git curl build-essential \
-    libpq-dev libssl-dev libffi-dev \
-    libjpeg-dev zlib1g-dev
+# Python y herramientas de desarrollo
+sudo apt install python3.11 python3.11-venv python3.11-dev python3-pip build-essential -y
+
+# Base de datos
+sudo apt install postgresql postgresql-contrib redis-server -y
+
+# Servidor web y utilidades
+sudo apt install nginx supervisor git curl wget -y
+
+# Herramientas adicionales
+sudo apt install libpq-dev libssl-dev libffi-dev -y
 ```
 
-### 1.3 Instalar Node.js (para el frontend)
-
+### 1.3 Instalar Node.js 18+
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt install -y nodejs
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install nodejs -y
+node --version  # Verificar instalación
 ```
 
-## 2. Configuraci�n de PostgreSQL
+## 2. Configuración de Base de Datos
 
-### 2.1 Crear base de datos y usuario
-
+### 2.1 PostgreSQL
 ```bash
+# Acceder a PostgreSQL
 sudo -u postgres psql
 
-# Dentro de PostgreSQL:
+# Crear base de datos y usuario
 CREATE DATABASE calicanto_db;
-CREATE USER calicanto_user WITH PASSWORD 'tu_password_segura';
+CREATE USER calicanto_user WITH PASSWORD '{V^8U4Tg04o-';
 ALTER ROLE calicanto_user SET client_encoding TO 'utf8';
 ALTER ROLE calicanto_user SET default_transaction_isolation TO 'read committed';
 ALTER ROLE calicanto_user SET timezone TO 'Europe/Madrid';
-GRANT ALL PRIVILEGES ON DATABASE calicanto_db TO calicanto_user;
+
 \q
 ```
 
-## 3. Configuraci�n del Proyecto
-
-### 3.1 Crear usuario para la aplicaci�n
-
+### 2.2 Redis
 ```bash
-sudo adduser --system --group calicanto
-sudo mkdir -p /home/calicanto
-sudo chown calicanto:calicanto /home/calicanto
+# Verificar que Redis esté activo
+sudo systemctl status redis-server
+sudo systemctl enable redis-server
 ```
 
-### 3.2 Clonar el repositorio
+## 3. Configuración del Usuario y Aplicación
 
+### 3.1 Crear Usuario del Sistema
 ```bash
-sudo -u calicanto git clone https://github.com/tu-usuario/calicanto.git /home/calicanto/web
-cd /home/calicanto/web
+sudo adduser calicanto --disabled-password --gecos "iSMeNOBrOcOS"
+sudo usermod -aG www-data calicanto
 ```
 
-### 3.3 Crear entorno virtual Python
-
+### 3.2 Clonar el Proyecto
 ```bash
-sudo -u calicanto python3 -m venv /home/calicanto/venv
+# Cambiar al usuario calicanto
+sudo su - calicanto
+
+# Clonar repositorio
+cd ~
+git clone [URL_DEL_REPOSITORIO] web
+cd web
 ```
 
-## 4. Configuraci�n del Backend (Django)
-
-### 4.1 Crear archivo de configuraci�n de producci�n
+### 3.3 Configurar el Backend
 
 ```bash
-sudo -u calicanto nano /home/calicanto/web/backend/.env
+# Crear entorno virtual
+python3.11 -m venv venv
+source venv/bin/activate
+
+# Instalar dependencias
+cd backend
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Crear archivo de configuración
+cp .env.example .env
 ```
 
-Contenido del archivo `.env`:
+Editar el archivo `.env` con los valores de producción:
+```bash
+nano .env
+```
 
+Contenido del `.env`:
 ```env
-# Django settings
-SECRET_KEY=genera_una_clave_secreta_muy_larga_y_aleatoria
+# Django Settings
+SECRET_KEY=GENERAR_CLAVE_SEGURA_AQUI
 DEBUG=False
-ALLOWED_HOSTS=localhost,127.0.0.1,dev-calicanto-072025.4d3.org,www.dev-calicanto-072025.4d3.org
+ALLOWED_HOSTS=tu-dominio.com,www.tu-dominio.com
 
-# Database
-DATABASE_URL=postgres://calicanto_user:tu_password_segura@localhost/calicanto_db
+# PostgreSQL Database
+POSTGRES_DB=calicanto_db
+POSTGRES_USER=calicanto_user
+POSTGRES_PASSWORD=CAMBIAR_PASSWORD_SEGURO
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
 
-# Redis
-REDIS_URL=redis://localhost:6379/0
+# Redis Configuration
 REDIS_HOST=localhost
 REDIS_PORT=6379
 
-# Email settings
+# CORS Settings
+CORS_ALLOWED_ORIGINS=https://tu-dominio.com,https://www.tu-dominio.com
+
+# Email Configuration
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
-EMAIL_USE_TLS=True
 EMAIL_HOST_USER=tu-email@gmail.com
 EMAIL_HOST_PASSWORD=tu-password-de-aplicacion
+EMAIL_USE_TLS=True
+DEFAULT_FROM_EMAIL=noreply@tu-dominio.com
 
-# Security
-CSRF_COOKIE_SECURE=True
-SESSION_COOKIE_SECURE=True
-SECURE_SSL_REDIRECT=True
-SECURE_HSTS_SECONDS=31536000
-SECURE_HSTS_INCLUDE_SUBDOMAINS=True
-SECURE_HSTS_PRELOAD=True
-
-# Celery
-CELERY_BROKER_URL=redis://localhost:6379/0
-CELERY_RESULT_BACKEND=redis://localhost:6379/0
-
-# CORS
-CORS_ALLOWED_ORIGINS=https://dev-calicanto-072025.4d3.org,https://www.dev-calicanto-072025.4d3.org
+# Contact Admin Emails
+CONTACT_ADMIN_EMAILS=calicanto.habitat@adobeverde.eu,admin@tu-dominio.com
 ```
 
-### 4.2 Instalar dependencias Python
-
+### 3.4 Configurar Django
 ```bash
-sudo -u calicanto /home/calicanto/venv/bin/pip install --upgrade pip
-sudo -u calicanto /home/calicanto/venv/bin/pip install -r /home/calicanto/web/backend/requirements.txt
-sudo -u calicanto /home/calicanto/venv/bin/pip install gunicorn
-sudo -u calicanto /home/calicanto/venv/bin/pip install channels channels-redis daphne
-```
-
-### 4.3 Crear archivos necesarios para Celery
-
-```bash
-# Crear archivo celery.py
-sudo -u calicanto nano /home/calicanto/web/backend/core/celery.py
-```
-
-Contenido del archivo:
-```python
-import os
-from celery import Celery
-
-# Set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
-
-app = Celery('core')
-
-# Using a string here means the worker doesn't have to serialize
-# the configuration object to child processes.
-# - namespace='CELERY' means all celery-related configuration keys
-#   should have a `CELERY_` prefix.
-app.config_from_object('django.conf:settings', namespace='CELERY')
-
-# Load task modules from all registered Django apps.
-app.autodiscover_tasks()
-
-@app.task(bind=True)
-def debug_task(self):
-    print(f'Request: {self.request!r}')
-```
-
-```bash
-# Actualizar __init__.py
-sudo -u calicanto nano /home/calicanto/web/backend/core/__init__.py
-```
-
-Contenido:
-```python
-# This will make sure the app is always imported when
-# Django starts so that shared_task will use this app.
-from .celery import app as celery_app
-
-__all__ = ('celery_app',)
-```
-
-### 4.4 Configurar Django para producci�n
-
-```bash
-# Recolectar archivos est�ticos
-sudo -u calicanto /home/calicanto/venv/bin/python /home/calicanto/web/backend/manage.py collectstatic --noinput
-
-# Ejecutar migraciones
-sudo -u calicanto /home/calicanto/venv/bin/python /home/calicanto/web/backend/manage.py migrate
+# Aplicar migraciones
+python manage.py migrate
 
 # Crear superusuario
-sudo -u calicanto /home/calicanto/venv/bin/python /home/calicanto/web/backend/manage.py createsuperuser
+python manage.py createsuperuser
 
-# Crear directorios para media y logs
-sudo mkdir -p /home/calicanto/web/backend/media
-sudo mkdir -p /var/log/calicanto
-sudo chown -R calicanto:calicanto /home/calicanto/web/backend/media
-sudo chown -R calicanto:calicanto /var/log/calicanto
+# Recolectar archivos estáticos
+python manage.py collectstatic --noinput
+
+# Crear directorios necesarios
+mkdir -p media logs
+
+# Salir del entorno virtual
+deactivate
+exit  # Volver a usuario con sudo
 ```
 
-## 5. Configuraci�n del Frontend (Vue.js)
-
-### 5.1 Instalar dependencias y construir
-
+### 3.5 Construir el Frontend
 ```bash
-cd /home/calicanto/web/frontend
-sudo -u calicanto npm install
-sudo -u calicanto npm run build
+sudo su - calicanto
+cd ~/web/frontend
+
+# Instalar dependencias
+npm install
+
+# Crear archivo de configuración de producción
+cat > .env.production << EOF
+VITE_API_URL=https://calicanto.adobeverde.eu
+VITE_WS_URL=wss://calicanto.adobeverde.eu
+EOF
+
+# Construir para producción
+npm run build
+
+exit  # Volver a usuario con sudo
 ```
 
-### 5.2 Crear archivo de configuraci�n para producci�n
+## 4. Configuración de Servicios
 
-Editar `/home/calicanto/web/frontend/.env.production`:
+### 4.1 Gunicorn con Supervisor
 
-```env
-VITE_API_URL=https://dev-calicanto-072025.4d3.org/api
-```
-
-## 6. Configuraci�n de Gunicorn
-
-### 6.1 Crear archivo de configuraci�n
-
+Crear archivo de configuración:
 ```bash
 sudo nano /etc/supervisor/conf.d/calicanto.conf
 ```
 
 Contenido:
-
 ```ini
-[program:calicanto]
-command=/home/calicanto/venv/bin/gunicorn core.wsgi:application --bind unix:/home/calicanto/web/calicanto.sock --workers 3 --timeout 120
+[group:calicanto]
+programs=calicanto-gunicorn,calicanto-daphne,calicanto-celery,calicanto-celerybeat
+
+[program:calicanto-gunicorn]
+command=/home/calicanto/web/venv/bin/gunicorn core.wsgi:application --bind 127.0.0.1:8000 --workers 3 --timeout 120
 directory=/home/calicanto/web/backend
 user=calicanto
 autostart=true
 autorestart=true
 redirect_stderr=true
-stdout_logfile=/var/log/calicanto/gunicorn.log
-environment=PATH="/home/calicanto/venv/bin",DJANGO_SETTINGS_MODULE="core.settings"
-```
+stdout_logfile=/home/calicanto/web/logs/gunicorn.log
+environment=PATH="/home/calicanto/web/venv/bin",LANG="es_ES.UTF-8",LC_ALL="es_ES.UTF-8"
 
-### 6.2 Crear directorio de logs
-
-```bash
-sudo mkdir -p /var/log/calicanto
-sudo chown calicanto:calicanto /var/log/calicanto
-```
-
-## 7. Configuraci�n de Daphne (para WebSockets)
-
-### 7.1 Crear configuraci�n de Daphne
-
-```bash
-sudo nano /etc/supervisor/conf.d/calicanto-asgi.conf
-```
-
-Contenido:
-
-```ini
-[program:calicanto-asgi]
-command=/home/calicanto/venv/bin/daphne -u /home/calicanto/web/daphne.sock core.asgi:application
+[program:calicanto-daphne]
+command=/home/calicanto/web/venv/bin/daphne -b 127.0.0.1 -p 8001 core.asgi:application
 directory=/home/calicanto/web/backend
 user=calicanto
 autostart=true
 autorestart=true
-stopasgroup=true
-killasgroup=true
 redirect_stderr=true
-stdout_logfile=/var/log/calicanto/daphne.log
-stderr_logfile=/var/log/calicanto/daphne.error.log
-environment=PATH="/home/calicanto/venv/bin:/usr/local/bin:/usr/bin:/bin",PYTHONPATH="/home/calicanto/web/backend",DJANGO_SETTINGS_MODULE="core.settings"
-```
+stdout_logfile=/home/calicanto/web/logs/daphne.log
+environment=PATH="/home/calicanto/web/venv/bin",LANG="es_ES.UTF-8",LC_ALL="es_ES.UTF-8"
 
-## 8. Configuraci�n de Celery (para tareas as�ncronas)
-
-### 8.1 Crear configuraci�n de Celery
-
-```bash
-sudo nano /etc/supervisor/conf.d/celery.conf
-```
-
-Contenido:
-
-```ini
-[program:celery]
-command=/home/calicanto/venv/bin/celery -A core worker -l info
+[program:calicanto-celery]
+command=/home/calicanto/web/venv/bin/celery -A core worker -l info
 directory=/home/calicanto/web/backend
 user=calicanto
-numprocs=1
-stdout_logfile=/var/log/calicanto/celery.log
-stderr_logfile=/var/log/calicanto/celery.log
 autostart=true
 autorestart=true
-startsecs=10
-stopwaitsecs=600
-environment=PATH="/home/calicanto/venv/bin",PYTHONPATH="/home/calicanto/web/backend",DJANGO_SETTINGS_MODULE="core.settings"
+redirect_stderr=true
+stdout_logfile=/home/calicanto/web/logs/celery.log
+environment=PATH="/home/calicanto/web/venv/bin",LANG="es_ES.UTF-8",LC_ALL="es_ES.UTF-8"
 
-[program:celery-beat]
-command=/home/calicanto/venv/bin/celery -A core beat -l info
+[program:calicanto-celerybeat]
+command=/home/calicanto/web/venv/bin/celery -A core beat -l info
 directory=/home/calicanto/web/backend
 user=calicanto
-numprocs=1
-stdout_logfile=/var/log/calicanto/celery-beat.log
-stderr_logfile=/var/log/calicanto/celery-beat.log
 autostart=true
 autorestart=true
-environment=PATH="/home/calicanto/venv/bin",PYTHONPATH="/home/calicanto/web/backend",DJANGO_SETTINGS_MODULE="core.settings"
+redirect_stderr=true
+stdout_logfile=/home/calicanto/web/logs/celerybeat.log
+environment=PATH="/home/calicanto/web/venv/bin",LANG="es_ES.UTF-8",LC_ALL="es_ES.UTF-8"
 ```
 
-## 9. Configuraci�n de Nginx
+### 4.2 Configurar Nginx
 
-### 9.1 Crear configuraci�n del sitio
-
+Crear configuración del sitio:
 ```bash
 sudo nano /etc/nginx/sites-available/calicanto
 ```
 
 Contenido:
-
 ```nginx
-upstream calicanto_backend {
-    server unix:/home/calicanto/web/calicanto.sock;
-}
-
+# Redirigir HTTP a HTTPS
 server {
     listen 80;
-    server_name dev-calicanto-072025.4d3.org www.dev-calicanto-072025.4d3.org;
-    
-    # Redirecci�n a HTTPS
+    server_name calicanto.adobeverde.eu www.calicanto.adobeverde.eu;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name dev-calicanto-072025.4d3.org www.dev-calicanto-072025.4d3.org;
+    server_name calicanto.adobeverde.eu www.calicanto.adobeverde.eu
     
-    # SSL Configuration (usar Certbot para obtener certificados)
-    ssl_certificate /etc/letsencrypt/live/dev-calicanto-072025.4d3.org/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/dev-calicanto-072025.4d3.org/privkey.pem;
-    
-    # Security headers
+    # Seguridad
     add_header X-Frame-Options "SAMEORIGIN" always;
-    add_header X-XSS-Protection "1; mode=block" always;
     add_header X-Content-Type-Options "nosniff" always;
-    add_header Referrer-Policy "no-referrer-when-downgrade" always;
-    add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline' 'unsafe-eval'" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    
+    # Logs
+    access_log /var/log/nginx/calicanto_access.log;
+    error_log /var/log/nginx/calicanto_error.log;
+    
+    # Tamaño máximo de carga
+    client_max_body_size 20M;
     
     # Frontend (Vue.js)
     location / {
         root /home/calicanto/web/frontend/dist;
         try_files $uri $uri/ /index.html;
-    }
-    
-    # Backend API
-    location /api {
-        proxy_pass http://calicanto_backend;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_redirect off;
-        client_max_body_size 100M;
-    }
-    
-    # Django Admin
-    location /admin {
-        proxy_pass http://calicanto_backend;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_redirect off;
-    }
-    
-    # Static files (Django)
-    location /static/ {
-        alias /home/calicanto/web/backend/staticfiles/;
-        expires 30d;
+        expires 1d;
         add_header Cache-Control "public, immutable";
     }
     
-    # Media files
-    location /media/ {
-        alias /home/calicanto/web/backend/media/;
-        expires 7d;
-        add_header Cache-Control "public";
+    # API Backend
+    location /api {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+        proxy_buffering off;
     }
     
-    # WebSocket support (Daphne on port 8001)
+    # WebSocket para Chat
     location /ws {
         proxy_pass http://127.0.0.1:8001;
         proxy_http_version 1.1;
@@ -389,245 +292,236 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_read_timeout 86400;
+    }
+    
+    # Archivos estáticos de Django
+    location /static {
+        alias /home/calicanto/web/backend/staticfiles;
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+    
+    # Archivos multimedia
+    location /media {
+        alias /home/calicanto/web/backend/media;
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+    
+    # Documentación API
+    location /api/docs {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $http_host;
+    }
+    
+    # Django Admin
+    location /admin {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
     
-    # CKEditor uploads
-    location /ckeditor/ {
-        proxy_pass http://calicanto_backend;
+    # CKEditor
+    location /ckeditor {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_redirect off;
-    }
-    
-    # API Documentation
-    location ~ ^/api/(docs|redoc)/ {
-        proxy_pass http://calicanto_backend;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_redirect off;
     }
 }
 ```
 
-### 9.2 Activar el sitio
-
+### 4.3 Activar Configuración
 ```bash
+# Crear enlace simbólico
 sudo ln -s /etc/nginx/sites-available/calicanto /etc/nginx/sites-enabled/
+
+# Deshabilitar sitio por defecto
+sudo rm /etc/nginx/sites-enabled/default
+
+# Verificar configuración
 sudo nginx -t
-sudo systemctl restart nginx
+
+# Recargar Nginx
+sudo systemctl reload nginx
 ```
 
-### 9.3 Nota importante sobre Nginx
-
-Cuando uses Let's Encrypt (Certbot) para SSL, este modificar� autom�ticamente tu configuraci�n de Nginx. Despu�s de ejecutar Certbot, verifica que la configuraci�n de WebSocket siga apuntando a `http://127.0.0.1:8001` y no a `http://calicanto_backend`.
-
-## 10. Configuraci�n SSL con Let's Encrypt
-
-### 10.1 Configuraci�n inicial (HTTP)
-
-Primero, crea una configuraci�n temporal solo con HTTP:
+## 5. Certificado SSL con Let's Encrypt
 
 ```bash
-sudo nano /etc/nginx/sites-available/calicanto
+# Instalar Certbot
+sudo apt install certbot python3-certbot-nginx -y
+
+# Obtener certificado
+sudo certbot --nginx -d calicanto.adobeverde.eu -d www.calicanto.adobeverde.eu
+
+# Configurar renovación automática
+sudo systemctl enable certbot.timer
 ```
 
-Contenido temporal:
-```nginx
-upstream calicanto_backend {
-    server unix:/home/calicanto/web/calicanto.sock;
-}
-
-server {
-    listen 80;
-    server_name dev-calicanto-072025.4d3.org www.dev-calicanto-072025.4d3.org;
-    
-    # Frontend (Vue.js)
-    location / {
-        root /home/calicanto/web/frontend/dist;
-        try_files $uri $uri/ /index.html;
-    }
-    
-    # Backend API
-    location /api {
-        proxy_pass http://calicanto_backend;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $host;
-        proxy_redirect off;
-    }
-}
-```
-
-### 10.2 Instalar y ejecutar Certbot
+## 6. Configuración del Firewall
 
 ```bash
-sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d dev-calicanto-072025.4d3.org -d www.dev-calicanto-072025.4d3.org
+# Configurar UFW
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 'Nginx Full'
+sudo ufw --force enable
+sudo ufw status
 ```
 
-### 10.3 Actualizar configuraci�n despu�s de SSL
-
-Despu�s de que Certbot configure SSL, actualiza la configuraci�n completa con todas las rutas necesarias.
-
-## 11. Configuraci�n de Daphne para WebSockets
-
-### 11.1 Cambiar Daphne a puerto TCP
-
-Para mejor compatibilidad, configura Daphne para usar TCP en lugar de socket Unix:
-
-```bash
-sudo nano /etc/supervisor/conf.d/calicanto-asgi.conf
-```
-
-Actualizar el comando:
-```ini
-command=/home/calicanto/venv/bin/daphne -b 127.0.0.1 -p 8001 core.asgi:application
-```
-
-## 12. Iniciar servicios
+## 7. Iniciar Servicios
 
 ```bash
 # Recargar supervisor
 sudo supervisorctl reread
 sudo supervisorctl update
 
-# Iniciar aplicaciones
-sudo supervisorctl start calicanto
-sudo supervisorctl start calicanto-asgi
-sudo supervisorctl start celery
-sudo supervisorctl start celery-beat
+# Iniciar todos los servicios
+sudo supervisorctl start calicanto:*
 
 # Verificar estado
 sudo supervisorctl status
-```
-
-## 13. Configuraci�n del Firewall
-
-```bash
-sudo ufw allow 22/tcp
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-sudo ufw enable
-```
-
-## 14. Monitoreo y Logs
-
-### 14.1 Ver logs de la aplicaci�n
-
-```bash
-# Logs de Gunicorn
-sudo tail -f /var/log/calicanto/gunicorn.log
-
-# Logs de Daphne (WebSockets)
-sudo tail -f /var/log/calicanto/daphne.log
-
-# Logs de Celery
-sudo tail -f /var/log/calicanto/celery.log
-
-# Logs de Nginx
-sudo tail -f /var/log/nginx/error.log
-sudo tail -f /var/log/nginx/access.log
-```
-
-### 14.2 Monitorear procesos
-
-```bash
-# Ver estado de supervisor
-sudo supervisorctl status
-
-# Ver uso de recursos
-htop
-```
-
-## 15. Backup y Mantenimiento
-
-### 15.1 Script de backup de base de datos
-
-Crear `/home/calicanto/backup.sh`:
-
-```bash
-#!/bin/bash
-BACKUP_DIR="/home/calicanto/backups"
-DATE=$(date +%Y%m%d_%H%M%S)
-DB_NAME="calicanto_db"
-
-mkdir -p $BACKUP_DIR
-pg_dump -U calicanto_user -h localhost $DB_NAME | gzip > $BACKUP_DIR/backup_$DATE.sql.gz
-
-# Eliminar backups antiguos (m�s de 30 d�as)
-find $BACKUP_DIR -name "backup_*.sql.gz" -mtime +30 -delete
-```
-
-### 15.2 Programar backup autom�tico
-
-```bash
-sudo crontab -e
-# Agregar:
-0 2 * * * /home/calicanto/backup.sh
-```
-
-## 16. Actualizaci�n del C�digo
-
-Para actualizar la aplicaci�n:
-
-```bash
-# Backend
-cd /home/calicanto/web
-sudo -u calicanto git pull origin main
-sudo -u calicanto /home/calicanto/venv/bin/pip install -r backend/requirements.txt
-sudo -u calicanto /home/calicanto/venv/bin/python backend/manage.py migrate
-sudo -u calicanto /home/calicanto/venv/bin/python backend/manage.py collectstatic --noinput
-
-# Frontend
-cd /home/calicanto/web/frontend
-sudo -u calicanto npm install
-sudo -u calicanto npm run build
 
 # Reiniciar servicios
-sudo supervisorctl restart calicanto
-sudo supervisorctl restart calicanto-asgi
-sudo supervisorctl restart celery
-sudo systemctl reload nginx
+sudo systemctl restart nginx
+sudo systemctl restart redis-server
+sudo systemctl restart postgresql
 ```
 
-## 17. Soluci�n de Problemas Comunes
+## 8. Monitoreo y Logs
 
-### Error 502 Bad Gateway
-- Verificar que Gunicorn est� ejecut�ndose: `sudo supervisorctl status calicanto`
-- Revisar logs: `sudo tail -f /var/log/calicanto/gunicorn.log`
-- Verificar permisos del socket: `ls -la /home/calicanto/web/`
+### 8.1 Ver logs en tiempo real
+```bash
+# Logs de Gunicorn
+sudo tail -f /home/calicanto/web/logs/gunicorn.log
 
-### Archivos est�ticos no se cargan
-- Verificar que se ejecut� `collectstatic`
-- Revisar permisos: `ls -la /home/calicanto/web/backend/staticfiles/`
-- Verificar configuraci�n de Nginx
+# Logs de Nginx
+sudo tail -f /var/log/nginx/calicanto_error.log
 
-### Base de datos no conecta
-- Verificar credenciales en `.env`
-- Probar conexi�n: `sudo -u postgres psql -U calicanto_user -d calicanto_db`
+# Logs de Supervisor
+sudo tail -f /var/log/supervisor/supervisord.log
+```
 
-### WebSockets no funcionan
-- Verificar que Daphne est� ejecut�ndose: `sudo supervisorctl status calicanto-asgi`
-- Revisar logs: `sudo tail -f /var/log/calicanto/daphne.log`
-- Verificar que Nginx redirija `/ws` a `http://127.0.0.1:8001`
-- Asegurarse de que el frontend env�e el token JWT en la URL del WebSocket
+### 8.2 Comandos útiles de Supervisor
+```bash
+# Ver estado de todos los procesos
+sudo supervisorctl status
 
-### Panel admin sin estilos CSS
-- Ejecutar collectstatic: `sudo -u calicanto /home/calicanto/venv/bin/python /home/calicanto/web/backend/manage.py collectstatic --noinput`
-- Verificar permisos: `ls -la /home/calicanto/web/backend/staticfiles/`
-- Revisar configuraci�n de Nginx para `/static/`
+# Reiniciar un servicio específico
+sudo supervisorctl restart calicanto-gunicorn
 
-### Error con Celery
-- Verificar que los archivos `celery.py` y `__init__.py` est�n correctamente configurados
-- Revisar logs: `sudo tail -f /var/log/calicanto/celery.log`
-- Asegurarse de que Redis est� funcionando: `redis-cli ping`
+# Detener todos los servicios
+sudo supervisorctl stop calicanto:*
 
-## Notas Finales
+# Iniciar todos los servicios
+sudo supervisorctl start calicanto:*
+```
 
-- Mantener el sistema actualizado regularmente
-- Monitorear el uso de recursos del servidor
-- Configurar alertas para errores cr�ticos
-- Realizar backups peri�dicos de la base de datos y archivos media
-- Revisar logs regularmente para detectar problemas
+## 9. Mantenimiento
+
+### 9.1 Actualizar la Aplicación
+```bash
+# Como usuario calicanto
+sudo su - calicanto
+cd ~/web
+
+# Actualizar código
+git pull origin main
+
+# Backend
+cd backend
+source ../venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py collectstatic --noinput
+deactivate
+
+# Frontend
+cd ../frontend
+npm install
+npm run build
+
+exit
+
+# Reiniciar servicios
+sudo supervisorctl restart calicanto:*
+```
+
+### 9.2 Backup de Base de Datos
+```bash
+# Crear directorio de backups
+sudo mkdir -p /var/backups/calicanto
+sudo chown calicanto:calicanto /var/backups/calicanto
+
+# Script de backup (crear como /home/calicanto/backup.sh)
+#!/bin/bash
+DATE=$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="/var/backups/calicanto"
+DB_NAME="calicanto_db"
+DB_USER="calicanto_user"
+
+# Backup de base de datos
+pg_dump -U $DB_USER -h localhost $DB_NAME > $BACKUP_DIR/db_backup_$DATE.sql
+
+# Backup de archivos media
+tar -czf $BACKUP_DIR/media_backup_$DATE.tar.gz -C /home/calicanto/web/backend media/
+
+# Eliminar backups antiguos (más de 7 días)
+find $BACKUP_DIR -name "*.sql" -mtime +7 -delete
+find $BACKUP_DIR -name "*.tar.gz" -mtime +7 -delete
+```
+
+### 9.3 Cron para Backups Automáticos
+```bash
+# Editar crontab del usuario calicanto
+sudo -u calicanto crontab -e
+
+# Agregar línea para backup diario a las 3 AM
+0 3 * * * /home/calicanto/backup.sh
+```
+
+## 10. Solución de Problemas
+
+### 10.1 Error 502 Bad Gateway
+- Verificar que Gunicorn esté ejecutándose: `sudo supervisorctl status`
+- Revisar logs: `sudo tail -f /home/calicanto/web/logs/gunicorn.log`
+- Verificar permisos de archivos
+
+### 10.2 Archivos estáticos no cargan
+- Verificar que se ejecutó `collectstatic`
+- Revisar permisos del directorio staticfiles
+- Verificar configuración de Nginx
+
+### 10.3 WebSocket no funciona
+- Verificar que Daphne esté ejecutándose
+- Revisar configuración de proxy en Nginx
+- Verificar que Redis esté activo
+
+### 10.4 Permisos de archivos
+```bash
+# Arreglar permisos
+sudo chown -R calicanto:www-data /home/calicanto/web
+sudo chmod -R 755 /home/calicanto/web
+sudo chmod -R 775 /home/calicanto/web/backend/media
+sudo chmod -R 775 /home/calicanto/web/backend/logs
+```
+
+## Notas Importantes
+
+1. **Seguridad**: Siempre use contraseñas seguras y únicas
+2. **Backups**: Configure backups automáticos regulares
+3. **Monitoreo**: Considere instalar herramientas como Prometheus o Netdata
+4. **Actualizaciones**: Mantenga el sistema y dependencias actualizadas
+5. **HTTPS**: Nunca ejecute en producción sin SSL/TLS
+
+## Contacto y Soporte
+
+Para soporte técnico o consultas sobre el despliegue:
+- Email: calicanto.habitat@adobeverde.eu
+- Documentación: [URL de documentación]
