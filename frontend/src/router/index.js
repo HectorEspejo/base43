@@ -21,6 +21,8 @@ import Profile from '@/views/Profile.vue'
 import NotFound from '@/views/NotFound.vue'
 import QuienesSomos from '@/views/QuienesSomos.vue'
 import Recursos from '@/views/Recursos.vue'
+import Terminos from '@/views/legal/Terminos.vue'
+import Privacidad from '@/views/legal/Privacidad.vue'
 
 const routes = [
   {
@@ -89,6 +91,16 @@ const routes = [
         name: 'Profile',
         component: Profile,
         meta: { requiresAuth: true },
+      },
+      {
+        path: 'terminos',
+        name: 'Terminos',
+        component: Terminos,
+      },
+      {
+        path: 'privacidad',
+        name: 'Privacidad',
+        component: Privacidad,
       },
     ],
   },

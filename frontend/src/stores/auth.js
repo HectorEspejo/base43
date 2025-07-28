@@ -1,9 +1,19 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import api from '@/services/api'
+import axios from 'axios'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
+
+// Create a separate axios instance for auth endpoints to avoid interceptor loops
+const authApi = axios.create({
+  baseURL: '/api/v1',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
 export const useAuthStore = defineStore('auth', () => {
   // State
@@ -20,7 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function login(credentials) {
     loading.value = true
     try {
-      const response = await api.post('/auth/login/', credentials)
+      const response = await authApi.post('/auth/login/', credentials)
       const { access, refresh, user: userData } = response.data
       
       setTokens(access, refresh)
@@ -40,7 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function register(userData) {
     loading.value = true
     try {
-      const response = await api.post('/auth/register/', userData)
+      const response = await authApi.post('/auth/register/', userData)
       const { message } = response.data
       
       // Ya no recibimos tokens porque el usuario necesita ser verificado
@@ -58,7 +68,13 @@ export const useAuthStore = defineStore('auth', () => {
   async function logout() {
     try {
       if (refreshToken.value) {
-        await api.post('/auth/logout/', { refresh_token: refreshToken.value })
+        // Add authorization header for logout
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token.value}`
+          }
+        }
+        await authApi.post('/auth/logout/', { refresh_token: refreshToken.value }, config)
       }
     } catch (error) {
       console.error('Error during logout:', error)
@@ -145,14 +161,16 @@ export const useAuthStore = defineStore('auth', () => {
     if (!refreshToken.value) return false
     
     try {
-      const response = await api.post('/auth/refresh/', {
+      const response = await authApi.post('/auth/refresh/', {
         refresh: refreshToken.value
       })
       token.value = response.data.access
       localStorage.setItem('access_token', response.data.access)
       return true
     } catch (error) {
+      // Token refresh failed, clear everything
       clearTokens()
+      user.value = null
       return false
     }
   }
@@ -178,6 +196,11 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('refresh_token')
   }
 
+  function clearSession() {
+    clearTokens()
+    user.value = null
+  }
+
   return {
     // State
     user,
@@ -196,5 +219,6 @@ export const useAuthStore = defineStore('auth', () => {
     uploadAvatar,
     refreshAccessToken,
     checkAuth,
+    clearSession,
   }
 })

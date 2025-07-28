@@ -31,14 +31,23 @@ api.interceptors.response.use(
     const originalRequest = error.config
     const authStore = useAuthStore()
 
+    // Skip interceptor for logout endpoint to avoid loops
+    if (originalRequest.url?.includes('/auth/logout/')) {
+      return Promise.reject(error)
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
 
+      // Try to refresh the token
       const refreshed = await authStore.refreshAccessToken()
       if (refreshed) {
+        // Update the Authorization header with new token
+        originalRequest.headers.Authorization = `Bearer ${localStorage.getItem('access_token')}`
         return api(originalRequest)
       } else {
-        authStore.logout()
+        // Clear tokens without making API call
+        authStore.clearSession()
         router.push({ name: 'Login' })
       }
     }

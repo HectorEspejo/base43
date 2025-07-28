@@ -258,8 +258,8 @@
     <footer class="footer footer-center p-6 sm:p-10 bg-base-200 text-base-content">
       <div class="grid grid-flow-col gap-2 sm:gap-4 text-sm sm:text-base">
         <router-link :to="{ name: 'Contacto' }" class="link link-hover">Contacto</router-link>
-        <a href="#" class="link link-hover">Términos</a>
-        <a href="#" class="link link-hover">Privacidad</a>
+        <router-link :to="{ name: 'Terminos' }" class="link link-hover">Términos</router-link>
+        <router-link :to="{ name: 'Privacidad' }" class="link link-hover">Privacidad</router-link>
       </div>
       <div class="text-center px-4">
         <p class="text-sm sm:text-base">© 2025 Calicanto - Plataforma comunitaria por la vivienda</p>
