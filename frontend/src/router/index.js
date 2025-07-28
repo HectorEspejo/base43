@@ -20,6 +20,7 @@ import Contacto from '@/views/Contacto.vue'
 import Profile from '@/views/Profile.vue'
 import NotFound from '@/views/NotFound.vue'
 import QuienesSomos from '@/views/QuienesSomos.vue'
+import Recursos from '@/views/Recursos.vue'
 
 const routes = [
   {
@@ -46,6 +47,11 @@ const routes = [
         name: 'Repositorio',
         component: Repositorio,
         meta: { requiresAuth: true },
+      },
+      {
+        path: 'recursos',
+        name: 'Recursos',
+        component: Recursos,
       },
       {
         path: 'proyectos',

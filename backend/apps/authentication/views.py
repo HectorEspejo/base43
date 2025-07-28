@@ -17,8 +17,20 @@ User = get_user_model()
 class CustomTokenObtainPairView(TokenObtainPairView):
     """
     Custom JWT token view that includes user data in response.
+    Verifica que el usuario esté verificado antes de permitir el login.
     """
     def post(self, request, *args, **kwargs):
+        # Primero verificar si el usuario existe y está verificado
+        username = request.data.get('username')
+        try:
+            user = User.objects.get(username=username)
+            if not user.is_verified:
+                return Response({
+                    'error': 'Su cuenta está pendiente de verificación. Por favor, espere a que un administrador verifique su cuenta.'
+                }, status=status.HTTP_403_FORBIDDEN)
+        except User.DoesNotExist:
+            pass  # Dejar que el TokenObtainPairView maneje el error
+        
         response = super().post(request, *args, **kwargs)
         if response.status_code == 200:
             user = User.objects.get(username=request.data['username'])
@@ -39,15 +51,10 @@ class RegisterView(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         
-        # Generate JWT tokens for the new user
-        refresh = RefreshToken.for_user(user)
-        
+        # No generar tokens para usuarios no verificados
         return Response({
             'user': UserSerializer(user).data,
-            'tokens': {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }
+            'message': 'Cuenta creada exitosamente. Su cuenta está pendiente de verificación por un administrador.'
         }, status=status.HTTP_201_CREATED)
 
 

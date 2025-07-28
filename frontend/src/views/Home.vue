@@ -150,8 +150,12 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-12 sm:py-16 md:py-20 bg-base-200">
-      <div class="container-custom text-center">
+    <section class="py-12 sm:py-16 md:py-20 bg-base-200 relative overflow-hidden">
+      <div 
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('/pattern-2.png'); background-size: 400px 400px; background-repeat: repeat;"
+      ></div>
+      <div class="container-custom text-center relative z-10">
         <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
           ¿Listo para formar parte del cambio?
         </h2>

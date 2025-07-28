@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.chat',
     'apps.partners',
     'apps.contacto',
+    'apps.recursos',
     
     # Cleanup - must be last
     'django_cleanup.apps.CleanupConfig',

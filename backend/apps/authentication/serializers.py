@@ -56,6 +56,8 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data.pop('password_confirm')
+        # Asegurar que el usuario se cree sin verificar
+        validated_data['is_verified'] = False
         user = User.objects.create_user(**validated_data)
         return user
 

@@ -29,9 +29,9 @@ export const useAuthStore = defineStore('auth', () => {
       toast.success('Inicio de sesión exitoso')
       return { success: true }
     } catch (error) {
-      const message = error.response?.data?.detail || 'Error al iniciar sesión'
+      const message = error.response?.data?.error || error.response?.data?.detail || 'Error al iniciar sesión'
       toast.error(message)
-      return { success: false, error: message }
+      return { success: false, error: message, isVerificationError: error.response?.status === 403 }
     } finally {
       loading.value = false
     }
@@ -41,13 +41,11 @@ export const useAuthStore = defineStore('auth', () => {
     loading.value = true
     try {
       const response = await api.post('/auth/register/', userData)
-      const { tokens, user: newUser } = response.data
+      const { message } = response.data
       
-      setTokens(tokens.access, tokens.refresh)
-      user.value = newUser
-      
-      toast.success('Registro exitoso. ¡Bienvenido!')
-      return { success: true }
+      // Ya no recibimos tokens porque el usuario necesita ser verificado
+      toast.success(message || 'Registro exitoso. Su cuenta está pendiente de verificación.')
+      return { success: true, needsVerification: true }
     } catch (error) {
       const message = error.response?.data?.detail || 'Error al registrar usuario'
       toast.error(message)

@@ -43,6 +43,7 @@ urlpatterns = [
     path('api/v1/chat/', include('apps.chat.urls')),
     path('api/v1/partners/', include('apps.partners.urls')),
     path('api/v1/contacto/', include('apps.contacto.urls')),
+    path('api/v1/recursos/', include('apps.recursos.urls')),
 ]
 
 # Serve media files in development
