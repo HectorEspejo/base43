@@ -188,43 +188,6 @@
           </div>
         </div>
 
-        <!-- Account Settings -->
-        <div class="card bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title mb-4">Configuración de Cuenta</h2>
-            
-            <div class="space-y-4">
-              <div class="form-control">
-                <label class="label cursor-pointer">
-                  <span class="label-text">Recibir notificaciones por email</span>
-                  <input type="checkbox" class="toggle toggle-primary" checked />
-                </label>
-              </div>
-              
-              <div class="form-control">
-                <label class="label cursor-pointer">
-                  <span class="label-text">Perfil público</span>
-                  <input type="checkbox" class="toggle toggle-primary" />
-                </label>
-              </div>
-              
-              <div class="form-control">
-                <label class="label cursor-pointer">
-                  <span class="label-text">Modo oscuro</span>
-                  <input type="checkbox" class="toggle toggle-primary" />
-                </label>
-              </div>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <div class="card-actions justify-between">
-              <button class="btn btn-error btn-outline btn-sm">
-                Eliminar cuenta
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -306,11 +269,13 @@ const changePassword = async () => {
   }
 }
 
-const handleAvatarChange = (event) => {
+const handleAvatarChange = async (event) => {
   const file = event.target.files[0]
   if (file) {
-    // TODO: Implement avatar upload
-    toast.info('Subida de avatar - Próximamente')
+    const result = await authStore.uploadAvatar(file)
+    if (result.success) {
+      user.value = authStore.currentUser
+    }
   }
 }
 </script>

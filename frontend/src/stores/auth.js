@@ -114,6 +114,33 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function uploadAvatar(file) {
+    loading.value = true
+    try {
+      const formData = new FormData()
+      formData.append('avatar', file)
+      
+      const response = await api.patch('/auth/avatar/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      
+      if (response.data.avatar) {
+        user.value = { ...user.value, avatar: response.data.avatar }
+      }
+      
+      toast.success('Avatar actualizado correctamente')
+      return { success: true }
+    } catch (error) {
+      const message = error.response?.data?.error || 'Error al subir avatar'
+      toast.error(message)
+      return { success: false, error: message }
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function refreshAccessToken() {
     if (!refreshToken.value) return false
     
@@ -166,6 +193,7 @@ export const useAuthStore = defineStore('auth', () => {
     fetchUser,
     updateProfile,
     changePassword,
+    uploadAvatar,
     refreshAccessToken,
     checkAuth,
   }

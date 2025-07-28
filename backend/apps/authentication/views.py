@@ -1,6 +1,7 @@
 from rest_framework import generics, status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
@@ -62,11 +63,16 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     """
     Get and update user profile.
     """
-    serializer_class = UserProfileSerializer
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
     
     def get_object(self):
         return self.request.user
+    
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return UserSerializer
+        return UserProfileSerializer
 
 
 class ChangePasswordView(generics.UpdateAPIView):
@@ -120,3 +126,28 @@ def current_user(request):
     """
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
+
+
+class AvatarUploadView(generics.UpdateAPIView):
+    """
+    Upload user avatar.
+    """
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+    
+    def get_object(self):
+        return self.request.user
+    
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        if 'avatar' in request.FILES:
+            user.avatar = request.FILES['avatar']
+            user.save()
+            return Response({
+                'message': 'Avatar actualizado correctamente.',
+                'avatar': user.avatar.url if user.avatar else None
+            }, status=status.HTTP_200_OK)
+        return Response({
+            'error': 'No se proporcionó ningún archivo.'
+        }, status=status.HTTP_400_BAD_REQUEST)
