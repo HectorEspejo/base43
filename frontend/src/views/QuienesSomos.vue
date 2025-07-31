@@ -94,8 +94,8 @@
                 >
                   <figure class="px-4 pt-4">
                     <img 
-                      src="/configuracion-cohousing.png" 
-                      alt="Configuración Cohousing - Modelo integral de vivienda colaborativa" 
+                      src="/pattern-2.png" 
+                      alt="Modelo de arquitectura" 
                       class="w-full h-auto rounded-lg"
                     />
                   </figure>
@@ -153,8 +153,8 @@
                 >
                   <figure class="px-4 pt-4">
                     <img 
-                      src="/estructura.png" 
-                      alt="Estructura de espacios comunitarios" 
+                      src="/pattern-2.png" 
+                      alt="Estructura organizacional" 
                       class="w-full h-auto rounded-lg"
                     />
                   </figure>
@@ -310,8 +310,8 @@
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="closeImageModal">✕</button>
         <figure class="mt-4">
           <img 
-            src="/configuracion-cohousing.png" 
-            alt="Configuración Cohousing - Modelo integral de vivienda colaborativa" 
+            src="/pattern-2.png" 
+            alt="Modelo de arquitectura" 
             class="w-full h-auto"
           />
         </figure>
@@ -324,8 +324,8 @@
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" @click="closeStructureModal">✕</button>
         <figure class="mt-4">
           <img 
-            src="/estructura.png" 
-            alt="Estructura de espacios comunitarios" 
+            src="/pattern-2.png" 
+            alt="Estructura organizacional" 
             class="w-full h-auto"
           />
         </figure>

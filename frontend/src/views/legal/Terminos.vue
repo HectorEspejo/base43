@@ -9,7 +9,7 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">1. Aceptación de los Términos</h2>
           <p>
-            Al acceder y utilizar el sitio web de Calicanto ("el Sitio"), usted acepta estar sujeto a estos Términos y Condiciones de Uso, 
+            Al acceder y utilizar el sitio web de Base43 ("el Sitio"), usted acepta estar sujeto a estos Términos y Condiciones de Uso, 
             todas las leyes y regulaciones aplicables, y acepta que es responsable del cumplimiento de las leyes locales aplicables. 
             Si no está de acuerdo con alguno de estos términos, tiene prohibido usar o acceder a este sitio.
           </p>
@@ -18,8 +18,7 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">2. Descripción del Servicio</h2>
           <p>
-            Calicanto es una plataforma comunitaria de vivienda que conecta a personas interesadas en proyectos de vivienda colaborativa, 
-            cohousing y soluciones habitacionales sostenibles. Proporcionamos:
+            Base43 es una plataforma web moderna que proporciona funcionalidades completas para proyectos web. Proporcionamos:
           </p>
           <ul class="list-disc pl-6 mt-3">
             <li>Información sobre proyectos de vivienda colaborativa</li>
@@ -59,9 +58,9 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">4. Propiedad Intelectual</h2>
           <p>
-            Todo el contenido del Sitio, incluyendo textos, gráficos, logos, imágenes y software, es propiedad de Calicanto 
+            Todo el contenido del Sitio, incluyendo textos, gráficos, logos, imágenes y software, es propiedad de Base43 
             o sus proveedores de contenido y está protegido por las leyes de propiedad intelectual. 
-            Calicanto opera bajo principios de copyleft, promoviendo el uso compartido y colaborativo del conocimiento.
+            Base43 opera bajo licencia MIT, promoviendo el uso compartido y colaborativo del código.
           </p>
         </section>
 
@@ -72,7 +71,7 @@
           </p>
           <ul class="list-disc pl-6 mt-3">
             <li>Conserva sus derechos de propiedad intelectual</li>
-            <li>Otorga a Calicanto una licencia no exclusiva para usar, mostrar y distribuir dicho contenido</li>
+            <li>Otorga a Base43 una licencia no exclusiva para usar, mostrar y distribuir dicho contenido</li>
             <li>Garantiza que tiene los derechos necesarios sobre el contenido publicado</li>
             <li>Acepta que otros usuarios puedan ver y compartir su contenido según los principios de la plataforma</li>
           </ul>
@@ -89,7 +88,7 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">7. Limitación de Responsabilidad</h2>
           <p>
-            Calicanto no será responsable de:
+            Base43 no será responsable de:
           </p>
           <ul class="list-disc pl-6 mt-3">
             <li>Daños indirectos, incidentales o consecuentes</li>
@@ -102,7 +101,7 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">8. Indemnización</h2>
           <p>
-            Usted acepta indemnizar y eximir de responsabilidad a Calicanto, sus directores, empleados y agentes 
+            Usted acepta indemnizar y eximir de responsabilidad a Base43, sus directores, empleados y agentes 
             de cualquier reclamación o demanda derivada de su uso del Sitio o violación de estos términos.
           </p>
         </section>
@@ -110,7 +109,7 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">9. Modificaciones</h2>
           <p>
-            Calicanto se reserva el derecho de modificar estos términos en cualquier momento. 
+            Base43 se reserva el derecho de modificar estos términos en cualquier momento. 
             Las modificaciones entrarán en vigor inmediatamente después de su publicación en el Sitio. 
             Su uso continuado del Sitio constituye la aceptación de los términos modificados.
           </p>
@@ -119,7 +118,7 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">10. Terminación</h2>
           <p>
-            Calicanto puede terminar o suspender su acceso al Sitio inmediatamente, 
+            Base43 puede terminar o suspender su acceso al Sitio inmediatamente, 
             sin previo aviso, por cualquier motivo, incluyendo el incumplimiento de estos Términos.
           </p>
         </section>
@@ -138,10 +137,8 @@
             Si tiene preguntas sobre estos Términos y Condiciones, puede contactarnos en:
           </p>
           <div class="mt-4 bg-gray-100 p-4 rounded-lg">
-            <p><strong>Calicanto</strong></p>
-            <p>Email: calicanto.habitat@adobeverde.eu</p>
-            <p>Teléfono: +34 652 615 416</p>
-            <p>Dirección: Calle Juan del Encina, 24, Local 1, 29013 Málaga, España</p>
+            <p><strong>Base43</strong></p>
+            <p>Email: contacto@base43.org</p>
           </div>
         </section>
       </div>

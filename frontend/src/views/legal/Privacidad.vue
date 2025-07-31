@@ -9,17 +9,14 @@
         <section class="mb-8">
           <h2 class="text-2xl font-semibold mb-4">1. Información General</h2>
           <p>
-            En Calicanto, respetamos su privacidad y nos comprometemos a proteger sus datos personales. 
+            En Base43, respetamos su privacidad y nos comprometemos a proteger sus datos personales. 
             Esta Política de Privacidad describe cómo recopilamos, usamos, almacenamos y protegemos su información 
             cuando utiliza nuestro sitio web y servicios.
           </p>
           <p class="mt-3">
             <strong>Responsable del tratamiento:</strong><br/>
-            Adobe Verde<br/>
-            CIF: B02731610<br/>
-            Dirección: Calle Juan del Encina, 24, Local 1, 29013 Málaga, España<br/>
-            Email: calicanto.habitat@adobeverde.eu<br/>
-            Teléfono: +34 652 615 416
+            Base43<br/>
+            Email: contacto@base43.org
           </p>
         </section>
 
@@ -73,7 +70,7 @@
             <li><strong>Con su consentimiento:</strong> Cuando usted lo autorice expresamente</li>
             <li><strong>Proveedores de servicios:</strong> Con terceros que nos ayudan a operar la plataforma (hosting, email, etc.)</li>
             <li><strong>Obligaciones legales:</strong> Cuando sea requerido por ley o autoridad competente</li>
-            <li><strong>Protección de derechos:</strong> Para proteger los derechos y seguridad de Calicanto y sus usuarios</li>
+            <li><strong>Protección de derechos:</strong> Para proteger los derechos y seguridad de Base43 y sus usuarios</li>
           </ul>
         </section>
 
@@ -120,7 +117,7 @@
             <li><strong>Revocación:</strong> Retirar el consentimiento en cualquier momento</li>
           </ul>
           <p class="mt-3">
-            Para ejercer estos derechos, contacte con nosotros en calicanto.habitat@adobeverde.eu
+            Para ejercer estos derechos, contacte con nosotros en contacto@base43.org
           </p>
         </section>
 
@@ -172,8 +169,7 @@
           </p>
           <div class="mt-4 bg-gray-100 p-4 rounded-lg">
             <p><strong>Delegado de Protección de Datos</strong></p>
-            <p>Email: calicanto.habitat@adobeverde.eu</p>
-            <p>Teléfono: +34 652 615 416</p>
+            <p>Email: contacto@base43.org</p>
           </div>
           <p class="mt-4">
             Si no está satisfecho con nuestra respuesta, tiene derecho a presentar una reclamación ante la 

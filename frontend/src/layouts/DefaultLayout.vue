@@ -149,10 +149,6 @@
               </ul>
             </div>
             
-            <!-- Adobe Verde Link -->
-            <a href="https://www.adobeverde.es/" target="_blank" rel="noopener noreferrer" class="flex items-center">
-              <img src="/adobeverde.png" alt="Adobe Verde" class="h-8 object-contain" />
-            </a>
           </div>
         </div>
         
@@ -236,11 +232,6 @@
             </div>
           </div>
           
-          <!-- Adobe Verde Link (Far Right) -->
-          <a href="https://www.adobeverde.es/" target="_blank" rel="noopener noreferrer" class="ml-6 flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors flex-shrink-0">
-            <img src="/adobeverde.png" alt="Adobe Verde" class="h-8 object-contain" />
-            <span class="text-sm font-medium text-gray-700">AdobeVerde</span>
-          </a>
         </div>
       </div>
     </nav>
@@ -265,12 +256,6 @@
         <p class="text-sm sm:text-base">© 2025 Base43 - Plataforma Web Base</p>
         <p class="text-xs sm:text-sm mt-1">Licencia Copyleft - Todos los derechos compartidos</p>
         <p class="text-xs sm:text-sm">Con la tecnología de 4d3</p>
-      </div>
-      <!-- Logos de financiación -->
-      <div class="flex items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 px-4 sm:px-0 w-full max-w-full overflow-hidden">
-        <img src="/ue.png" alt="Union Europea" class="h-10 sm:h-16 max-w-[80px] sm:max-w-none object-contain flex-shrink-0" />
-        <img src="/mites.png" alt="MITES" class="h-10 sm:h-16 max-w-[80px] sm:max-w-none object-contain flex-shrink-0" />
-        <img src="/prtr.png" alt="PRTR" class="h-16 sm:h-32 max-w-[120px] sm:max-w-none object-contain flex-shrink-0" />
       </div>
     </footer>
   </div>
