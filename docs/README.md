@@ -1,8 +1,8 @@
-# Calicanto - Plataforma Comunitaria de Vivienda
+# Base43 - Plataforma Web Base
 
 ## 📋 Descripción
 
-Calicanto es una plataforma web comunitaria diseñada para conectar personas, proyectos y recursos en el ámbito de la vivienda colaborativa y sostenible. La plataforma facilita la creación de comunidades, el intercambio de conocimientos y la gestión de proyectos de vivienda alternativos.
+Base43 es una plataforma web base diseñada como punto de partida para proyectos web modernos. Incluye funcionalidades esenciales como gestión de usuarios, proyectos, noticias, chat en tiempo real y más.
 
 ## 🚀 Características Principales
 
@@ -46,8 +46,8 @@ Calicanto es una plataforma web comunitaria diseñada para conectar personas, pr
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/calicanto.git
-cd calicanto/web
+git clone https://github.com/tu-usuario/base43.git
+cd base43
 ```
 
 2. Copia el archivo de configuración de ejemplo:
@@ -213,14 +213,14 @@ Este proyecto está bajo licencia Copyleft. Consulta el archivo `LICENSE` para m
 
 ## 👥 Equipo
 
-- Desarrollo inicial por la comunidad Calicanto
+- Desarrollo inicial por Base43
 - Mantenido por colaboradores voluntarios
 
 ## 📞 Contacto
 
-- Email: contacto@calicanto.org
-- Web: https://calicanto.org
+- Email: contacto@base43.org
+- Web: https://base43.org
 
 ---
 
-*Construyendo comunidad, compartiendo hogar* 🏘️
+*Tu base para proyectos web modernos* 🚀

@@ -3,8 +3,8 @@
     <!-- Hero Image Section -->
     <section class="relative h-[500px] w-full overflow-hidden">
       <img 
-        src="/calicanto-2025.jpg" 
-        alt="Somos Calicanto - Promotora social de vivienda" 
+        src="/hero-1.png" 
+        alt="Base43 - Plataforma Web Base" 
         class="w-full h-full object-cover"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
@@ -31,16 +31,16 @@
               <h2 class="text-3xl font-bold">Nuestra misión</h2>
             </div>
             <p class="text-lg text-gray-700 mb-4">
-              Desde la empresa de inserción <strong>Adobe Verde</strong>, promovida por la entidad <strong>Prodiversa - Progreso y Diversidad</strong>, en nuestro propósito de promover soluciones a la crisis de la vivienda que estamos sufriendo en Málaga, han creado esta Promotora Inmobiliaria Social e Inclusiva para la planificación, desarrollo, construcción, rehabilitación y gestión de viviendas destinadas a sectores de la población con dificultad de acceso a una vivienda digna.
+              Base43 es una plataforma web moderna y escalable diseñada para servir como base sólida para proyectos web profesionales. Construida con las mejores prácticas de desarrollo, ofrece una arquitectura robusta que combina Django en el backend con Vue.js en el frontend.
             </p>
             <p class="text-lg text-gray-700">
-              La inclusión social en el contexto de una promotora inmobiliaria de vivienda social implica asegurar que todas las personas, independientemente de su situación económica, social o cultural, tengan acceso a una vivienda digna y adecuada. Este enfoque busca no solo proporcionar un lugar físico para vivir, sino también fomentar una integración plena en la sociedad.
+              Nuestra misión es proporcionar una base de código limpia, bien estructurada y fácilmente extensible que permita a los desarrolladores iniciar sus proyectos con una base sólida. Incluimos funcionalidades esenciales como autenticación, gestión de contenido, chat en tiempo real y más.
             </p>
           </div>
           <div class="relative">
             <img 
-              src="/compartir.webp" 
-              alt="Comunidad compartiendo - Vivienda colaborativa" 
+              src="/pattern-2.png" 
+              alt="Base43 - Arquitectura moderna" 
               class="w-full h-auto rounded-lg shadow-lg"
             />
           </div>

@@ -46,7 +46,7 @@ export default {
   daisyui: {
     themes: [
       {
-        calicanto: {
+        base43: {
           "primary": "#22c55e",
           "secondary": "#fbbc04",
           "accent": "#1fb2a6",

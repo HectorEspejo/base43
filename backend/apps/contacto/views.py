@@ -53,7 +53,7 @@ class ContactMessageCreateView(generics.CreateAPIView):
         """
         
         # Send to admin email(s)
-        admin_emails = getattr(settings, 'CONTACT_ADMIN_EMAILS', ['calicanto.habitat@adobeverde.eu'])
+        admin_emails = getattr(settings, 'CONTACT_ADMIN_EMAILS', ['admin@base43.org'])
         send_mail(
             subject,
             email_message,

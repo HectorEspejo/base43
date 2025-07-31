@@ -1,5 +1,5 @@
 """
-ASGI config for Calicanto project.
+ASGI config for Base43 project.
 """
 
 import os

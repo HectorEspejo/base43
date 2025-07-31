@@ -1,5 +1,5 @@
 """
-URL configuration for Calicanto project.
+URL configuration for Base43 project.
 """
 from django.contrib import admin
 from django.urls import path, include
@@ -12,11 +12,11 @@ from drf_yasg import openapi
 # API Documentation Schema
 schema_view = get_schema_view(
     openapi.Info(
-        title="Calicanto Community Housing API",
+        title="Base43 API",
         default_version='v1',
-        description="API para la plataforma comunitaria de vivienda Calicanto",
-        terms_of_service="https://www.calicanto.com/terms/",
-        contact=openapi.Contact(email="contact@calicanto.com"),
+        description="API para la plataforma web Base43",
+        terms_of_service="https://www.base43.org/terms/",
+        contact=openapi.Contact(email="contact@base43.org"),
         license=openapi.License(name="Copyleft License"),
     ),
     public=True,

@@ -1,5 +1,5 @@
 """
-Django settings for Calicanto Community Housing Platform.
+Django settings for Base43 Web Platform.
 """
 
 from pathlib import Path

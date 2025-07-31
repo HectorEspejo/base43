@@ -9,10 +9,10 @@
       <div class="hero-content text-center text-white relative z-10">
         <div class="max-w-3xl">
           <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
-            Un espacio de innovación urbana y compromiso social
+            Tu plataforma web moderna y escalable
           </h1>
           <p class="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 px-4 sm:px-0">
-            Calicanto es una plataforma pionera que impulsa modelos habitacionales sostenibles, cooperativos y asequibles desde la economía social. En alianza con comunidades, entidades del tercer sector y administraciones públicas, construimos soluciones reales al derecho a la vivienda. Descubre nuestros valores, proyectos y la comunidad que lo hace posible.
+            Base43 es una plataforma web completa construida con Django y Vue.js, diseñada para servir como base sólida para tus proyectos. Incluye autenticación, gestión de contenido, chat en tiempo real y más funcionalidades listas para usar.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 sm:justify-center px-4 sm:px-0">
             <router-link :to="{ name: 'Proyectos' }" class="btn btn-secondary btn-md sm:btn-lg w-full sm:w-auto">

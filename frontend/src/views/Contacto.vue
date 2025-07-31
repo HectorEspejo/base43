@@ -117,7 +117,7 @@
             </div>
             <div>
               <h3 class="font-semibold mb-1">Email</h3>
-              <p class="text-gray-600">calicanto.habitat@adobeverde.eu</p>
+              <p class="text-gray-600">contacto@base43.org</p>
             </div>
           </div>
 

@@ -93,7 +93,7 @@
           
           <!-- Logo (Center) -->
           <router-link :to="{ name: 'Home' }" class="flex items-center">
-            <img src="/calicanto-logo.png" alt="Calicanto" class="h-14 object-contain" />
+            <img src="/logo.png" alt="Base43" class="h-14 object-contain" />
           </router-link>
           
           <!-- Right Section -->
@@ -161,7 +161,7 @@
           <!-- Logo (Left) -->
           <div class="flex items-center flex-shrink-0">
             <router-link :to="{ name: 'Home' }" class="flex items-center">
-              <img src="/calicanto-logo.png" alt="Calicanto" class="h-20 object-contain" />
+              <img src="/logo.png" alt="Base43" class="h-20 object-contain" />
             </router-link>
           </div>
           
@@ -262,7 +262,7 @@
         <router-link :to="{ name: 'Privacidad' }" class="link link-hover">Privacidad</router-link>
       </div>
       <div class="text-center px-4">
-        <p class="text-sm sm:text-base">© 2025 Calicanto - Plataforma comunitaria por la vivienda</p>
+        <p class="text-sm sm:text-base">© 2025 Base43 - Plataforma Web Base</p>
         <p class="text-xs sm:text-sm mt-1">Licencia Copyleft - Todos los derechos compartidos</p>
         <p class="text-xs sm:text-sm">Con la tecnología de 4d3</p>
       </div>

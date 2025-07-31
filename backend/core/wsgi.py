@@ -1,5 +1,5 @@
 """
-WSGI config for Calicanto project.
+WSGI config for Base43 project.
 """
 
 import os
